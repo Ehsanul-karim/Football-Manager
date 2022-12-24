@@ -238,7 +238,7 @@ public class Player_Record extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
-                            String sql = "insert into player_details (Name,clubName , country,position,player_status,age,Height,Salary) values (?,?,?,?,?,?,?,?)";
+                            String sql = "insert into player_details (Name,clubName , country,position,player_status,age,Height,Salary,market_status) values (?,?,?,?,?,?,?,?,?)";
                             PreparedStatement plat = c.prepareStatement(sql);
                             plat.setString(1,jTextField1.getText());
                             plat.setString(2,jLabel11.getText());
@@ -248,6 +248,7 @@ public class Player_Record extends javax.swing.JFrame {
                             plat.setInt(6,Integer.parseInt(jTextField3.getText()));
                             plat.setFloat(7,Float.parseFloat(jTextField4.getText()));
                           plat.setInt(8,Integer.parseInt(jTextField5.getText()));
+                          plat.setBoolean(9,false);
                           plat.executeUpdate();
                           JOptionPane.showMessageDialog(this,"Data inserted");
                           c.close();

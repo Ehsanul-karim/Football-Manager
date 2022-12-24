@@ -5,6 +5,7 @@
 package projectfinal;
 
 import Class.DBHELPER;
+import static Class.DBHELPER.ppData;
 import Class.USER;
 import Class.select;
 import com.sun.org.apache.xpath.internal.operations.Bool;
@@ -16,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import static java.lang.System.exit;
 import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -24,6 +26,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
@@ -46,10 +50,15 @@ public class Homepage extends javax.swing.JFrame {
      */
     DefaultTableModel model;
     DefaultTableModel model2;
+    int TOTALSALARY=0;
     String CLUBNAME;
     int min = 100000;
     int max = -1;
-    
+    int TOTALCOACH =0;
+     Market_page marketobj = new Market_page();
+      Match_schedule_page matchobj = new Match_schedule_page();
+      Settings_page settingobj = new Settings_page();
+      squard2_formation squadobj = new squard2_formation();
     public Homepage() {
         initComponents();
         CLUBNAME = jLabel3.getText();
@@ -57,8 +66,8 @@ public class Homepage extends javax.swing.JFrame {
                        
        this.setIconImage(icon7);
        this.setTitle("Football Manager");
-        jTextField3.setVisible(false);
-                jTextField1.setVisible(false);
+        From_TextField.setVisible(false);
+                To_TextField.setVisible(false);
                 jTextField2.setVisible(false);
                         jComboBox1.setVisible(false);
                         jLabel7.setVisible(false);
@@ -70,9 +79,7 @@ public class Homepage extends javax.swing.JFrame {
                                                 jLabel19.setVisible(false);
                                                 jTextField12.setVisible(false);
                                                 jComboBox1.setVisible(false);
-                                                
-
-                                                
+                                                jButton18.setVisible(false);                                            
     }
 
     /**
@@ -110,8 +117,8 @@ public class Homepage extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        To_TextField = new javax.swing.JTextField();
+        From_TextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField2 = new javax.swing.JTextField();
@@ -144,6 +151,7 @@ public class Homepage extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
+        jButton18 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -477,19 +485,29 @@ public class Homepage extends javax.swing.JFrame {
         });
         jPanel1.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 560, 100, 30));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        To_TextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                To_TextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 80, 30));
+        To_TextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                To_TextFieldKeyReleased(evt);
+            }
+        });
+        jPanel1.add(To_TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 40, 80, 30));
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        From_TextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                From_TextFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 80, 30));
+        From_TextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                From_TextFieldKeyReleased(evt);
+            }
+        });
+        jPanel1.add(From_TextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 40, 80, 30));
 
         jLabel5.setText("TO");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 50, -1, -1));
@@ -519,7 +537,7 @@ public class Homepage extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Caladea", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 0, 0));
         jLabel6.setText("Notification");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 190, 20));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 480, 20));
 
         jLabel7.setText("FROM");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, -1, -1));
@@ -734,6 +752,17 @@ public class Homepage extends javax.swing.JFrame {
         });
         jPanel1.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 40, 160, 40));
 
+        jButton18.setBackground(new java.awt.Color(204, 204, 204));
+        jButton18.setFont(new java.awt.Font("Ebrima", 1, 18)); // NOI18N
+        jButton18.setText("Done");
+        jButton18.setFocusable(false);
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 560, 380, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -750,14 +779,45 @@ public class Homepage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        marketobj.setVisible(false);
+        settingobj.setVisible(false);
+        matchobj.setVisible(false);
+        squadobj.passValue(jLabel3.getText());
+        squadobj.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        marketobj.setVisible(false);
+        squadobj.setVisible(false);
+        settingobj.setVisible(false);
+        matchobj.setVisible(false);
+        textFiledEmpty();
+        jComboBox1.setVisible(false);
+        jTextField12.setVisible(false);
+        
+        To_TextField.setVisible(false);
+        From_TextField.setVisible(false);
+        jLabel5.setVisible(false);
+        jLabel7.setVisible(false);
+        
+        jTextField2.setVisible(false);
+        jButton9.setVisible(false);
+        jLabel6.setVisible(false);
+        jLabel6.setVisible(false);
+        lol();
+        int p =TOTALCOACH+TOTALSALARY;
+        jButton16.setText("Total Salary: "+p);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+       matchobj.setVisible(false);
+        squadobj.setVisible(false);
+        settingobj.setVisible(false);
+        marketobj.passValue(jLabel3.getText());
+        marketobj.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -771,13 +831,20 @@ public class Homepage extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        marketobj.setVisible(false);
+        squadobj.setVisible(false);
+        matchobj.setVisible(false);
+        settingobj.passValue(jLabel3.getText());
+        settingobj.setVisible(true);
+        
     }//GEN-LAST:event_jButton5ActionPerformed
     
     
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-                jTextField1.setVisible(true);
-        jTextField3.setVisible(true);
+        textFiledEmpty();
+                To_TextField.setVisible(true);
+        From_TextField.setVisible(true);
         jLabel5.setVisible(true);
         jLabel7.setVisible(true);
         jComboBox1.setVisible(false);
@@ -787,33 +854,37 @@ public class Homepage extends javax.swing.JFrame {
         
         lol2();  
         
-        jTextField3.setText(""+min);
-        jTextField1.setText(""+max);
+        From_TextField.setText(""+min);
+        To_TextField.setText(""+max);
         
         
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        textFiledEmpty();
         jComboBox1.setVisible(false);
         jTextField12.setVisible(false);
         
-        jTextField1.setVisible(false);
-        jTextField3.setVisible(false);
+        To_TextField.setVisible(false);
+        From_TextField.setVisible(false);
         jLabel5.setVisible(false);
         jLabel7.setVisible(false);
         
         jTextField2.setVisible(true);
         jButton9.setVisible(true);
+        jLabel6.setVisible(false);
+        jLabel6.setVisible(false);
         lol();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        textFiledEmpty();
         jComboBox1.setVisible(true);
         jTextField12.setVisible(false);
-                jTextField1.setVisible(false);
-        jTextField3.setVisible(false);
+                To_TextField.setVisible(false);
+        From_TextField.setVisible(false);
         jLabel5.setVisible(false);
         jLabel7.setVisible(false);
         jTextField2.setVisible(false);
@@ -821,21 +892,163 @@ public class Homepage extends javax.swing.JFrame {
         jButton9.setVisible(true);
        lol();
     }//GEN-LAST:event_jButton8ActionPerformed
-
+public void textFiledEmpty()
+{
+        jTextField5.setText("");
+        jTextField10.setText("");
+        jTextField6.setText("");
+        jTextField7.setText("");
+        jTextField11.setText("");
+        
+        jTextField8.setText("");
+        jTextField9.setText("");
+        jTextField4.setText("");
+}
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
         // TODO add your handling code here:
+        textFiledEmpty();
+                 int row = 0;
+            if(model.getRowCount() == 0){
+                JOptionPane.showMessageDialog(this,"No Player In the Table");
+                return;
+            }
+         int maxsalary=-1;
+         int row_max = 0;
+        for(row=0;row < model.getRowCount() ; row++)
+        {
+            int SALARY = Integer.parseInt(model.getValueAt(row, 6).toString());
+            if(SALARY>maxsalary){
+                maxsalary = SALARY;
+                row_max = row;
+            }
+        }
+            
+        jTextField5.setText(model.getValueAt(row_max, 0).toString());
+        jTextField10.setText(jLabel3.getText());
+        jTextField6.setText(model.getValueAt(row_max, 1).toString());
+        jTextField7.setText(model.getValueAt(row_max, 4).toString());
+       if(model.getValueAt(row_max, 3).toString().equals("1"))
+       {
+           jTextField11.setText("Yes");
+       }
+       else
+       {
+           jTextField11.setText("No");
+       }
+        
+        jTextField8.setText(model.getValueAt(row_max, 5).toString());
+        jTextField9.setText(model.getValueAt(row_max, 6).toString());
+        jTextField4.setText(model.getValueAt(row_max, 2).toString()) ;
+
+        
     }//GEN-LAST:event_jButton12ActionPerformed
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
+        textFiledEmpty();
+         int row = 0;
+            if(model.getRowCount() == 0){
+                JOptionPane.showMessageDialog(this,"No Player In the Table");
+                return;
+            }
+         int maxage=-1;
+         int row_max = 0;
+        for(row=0;row < model.getRowCount() ; row++)
+        {
+            int AGE = Integer.parseInt(model.getValueAt(row, 4).toString());
+            if(AGE>maxage){
+                maxage = AGE;
+                row_max = row;
+            }
+        }
+            
+        jTextField5.setText(model.getValueAt(row_max, 0).toString());
+        jTextField10.setText(jLabel3.getText());
+        jTextField6.setText(model.getValueAt(row_max, 1).toString());
+        jTextField7.setText(model.getValueAt(row_max, 4).toString());
+       if(model.getValueAt(row_max, 3).toString().equals("1"))
+       {
+           jTextField11.setText("Yes");
+       }
+       else
+       {
+           jTextField11.setText("No");
+       }
+        
+        jTextField8.setText(model.getValueAt(row_max, 5).toString());
+        jTextField9.setText(model.getValueAt(row_max, 6).toString());
+        jTextField4.setText(model.getValueAt(row_max, 2).toString()) ;
+        
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
         // TODO add your handling code here:
+        
+        textFiledEmpty();
+         int row = 0;
+            if(model.getRowCount() == 0){
+                JOptionPane.showMessageDialog(this,"No Player In the Table");
+                return;
+            }
+         float maxsalary = -1;
+         int row_max = 0;
+        for(row=0;row < model.getRowCount() ; row++)
+        {
+            float SALARY = Float.parseFloat(model.getValueAt(row, 5).toString());
+            if(SALARY>maxsalary){
+                maxsalary = SALARY;
+                row_max = row;
+            }
+        }
+            
+        jTextField5.setText(model.getValueAt(row_max, 0).toString());
+        jTextField10.setText(jLabel3.getText());
+        jTextField6.setText(model.getValueAt(row_max, 1).toString());
+        jTextField7.setText(model.getValueAt(row_max, 4).toString());
+       if(model.getValueAt(row_max, 3).toString().equals("1"))
+       {
+           jTextField11.setText("Yes");
+       }
+       else
+       {
+           jTextField11.setText("No");
+       }
+        
+        jTextField8.setText(model.getValueAt(row_max, 5).toString());
+        jTextField9.setText(model.getValueAt(row_max, 6).toString());
+        jTextField4.setText(model.getValueAt(row_max, 2).toString()) ;
+
+               
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
         // TODO add your handling code here:
+         textFiledEmpty();
+         int row = 0;
+            if(model.getRowCount() == 0){
+                JOptionPane.showMessageDialog(this,"No Player In the Table");
+                return;
+            }
+         int cou = -1;
+         HashMap <String,Integer> mp = new HashMap<>();
+        for(row=0;row < model.getRowCount() ; row++)
+        {
+            String COUNTRY = model.getValueAt(row, 1).toString();
+             if(mp.get(COUNTRY)==null){
+                 mp.put(COUNTRY,1);
+             }
+             else{
+                  int t=mp.get(COUNTRY);
+                 t++;
+                 mp.put(COUNTRY,t);
+             }            
+           // System.out.println("mp"+ mp.get(COUNTRY));
+            //mp. put(COUNTRY, (mp.get(COUNTRY).intValue())+1 ); 
+        }
+        PopUpFor_Country_wise_player_count obj = new PopUpFor_Country_wise_player_count();
+        obj.pass(mp);
+        obj.setVisible(true);
+        
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
@@ -844,32 +1057,39 @@ public class Homepage extends javax.swing.JFrame {
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
         // TODO add your handling code here:
+        textFiledEmpty();
         jComboBox1.setVisible(false);
         jTextField2.setVisible(false);
         jTextField12.setVisible(true);
-                jTextField1.setVisible(false);
-        jTextField3.setVisible(false);
+                To_TextField.setVisible(false);
+        From_TextField.setVisible(false);
         jLabel5.setVisible(false);
         jLabel7.setVisible(false);
         jButton9.setVisible(true);
+        jLabel6.setVisible(false);
         lol();
         
     }//GEN-LAST:event_jButton17ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void To_TextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_To_TextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_To_TextFieldActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void From_TextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_From_TextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_From_TextFieldActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
+        marketobj.setVisible(false);
+        squadobj.setVisible(false);
+        settingobj.setVisible(false);
+       matchobj.passValue(jLabel3.getText());
+        matchobj.setVisible(true);
     }//GEN-LAST:event_jButton11ActionPerformed
 
     public void lol()
@@ -877,6 +1097,7 @@ public class Homepage extends javax.swing.JFrame {
         jComboBox1.setSelectedItem("Position");
         String cnm = jLabel3.getText();
         String position =  "";
+        TOTALSALARY = 0;
             jLabel18.setVisible(false); 
             int check =0;
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
@@ -890,19 +1111,14 @@ public class Homepage extends javax.swing.JFrame {
                 
                 
               ResultSet rs = DBHELPER.posData(position,CLUBNAME);
-//            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
-//            String sql = "select * from player_details where Name= ? ";
-//            PreparedStatement plat = c.prepareStatement(sql);
-//            //plat.setString(2, jLabel3.getText());
-//            plat.setString(1,position);
-//
-//            ResultSet rs = plat.executeQuery();   
-//            System.out.println(sql);
+
                 
                 
                 
                 while(rs.next()){
                     if(rs.getString("clubName").equals(cnm)){
+                        if(rs.getString("market_status").equals("0")){
+                     TOTALSALARY = TOTALSALARY + rs.getInt("Salary");
                     check = 1;
                     java.util.Vector v = new java.util.Vector();
                     v.add(rs.getString("Name"));
@@ -915,11 +1131,14 @@ public class Homepage extends javax.swing.JFrame {
 
                    dtm.addRow(v);
                     }
+                  }
                 }
                 if(check == 0)
                 {
                     jLabel18.setVisible(true);
                 }
+                int p = TOTALCOACH + TOTALSALARY;
+                jButton16.setText("Total Salary: "+TOTALSALARY);
             } catch (SQLException ex) {
             Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -929,6 +1148,7 @@ public class Homepage extends javax.swing.JFrame {
         jComboBox1.setSelectedItem("Position");
         String cnm = jLabel3.getText();
         String position =  "";
+        TOTALSALARY = 0;
             jLabel18.setVisible(false); 
             int check =0;
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
@@ -941,6 +1161,7 @@ public class Homepage extends javax.swing.JFrame {
               ResultSet rs = DBHELPER.posData(position,CLUBNAME);
                 while(rs.next()){
                     if(rs.getString("clubName").equals(cnm)){
+                                            TOTALSALARY = TOTALSALARY + rs.getInt("Salary");
                     check = 1;
                     java.util.Vector v = new java.util.Vector();
                     v.add(rs.getString("Name"));
@@ -960,6 +1181,7 @@ public class Homepage extends javax.swing.JFrame {
                     dtm.addRow(v);
                     }
                 }
+                jButton16.setText("Total Salary: "+TOTALSALARY);
                 if(check == 0)
                 {
                     jLabel18.setVisible(true);
@@ -973,6 +1195,7 @@ public class Homepage extends javax.swing.JFrame {
         // TODO add your handling code here:
         String position =  jComboBox1.getItemAt(jComboBox1.getSelectedIndex());
         String cnm = jLabel3.getText();
+        TOTALSALARY = 0;
         if(!position.equals("Position")){
             jLabel18.setVisible(false); 
             int check =0;
@@ -986,6 +1209,8 @@ public class Homepage extends javax.swing.JFrame {
                 ResultSet rs = DBHELPER.posData(position,CLUBNAME);
                 while(rs.next()){
                     if(rs.getString("clubName").equals(cnm)){
+                        if(rs.getString("market_status").equals("0")){
+                         TOTALSALARY = TOTALSALARY + rs.getInt("Salary");
                         check = 1;
                     java.util.Vector v = new java.util.Vector();
                     v.add(rs.getString("Name"));
@@ -997,8 +1222,10 @@ public class Homepage extends javax.swing.JFrame {
                     v.add(rs.getString("Salary"));
 
                    dtm.addRow(v);
+                        }
                     }
                 }
+                jButton16.setText("Total Salary: "+TOTALSALARY );
                 if(check == 0)
                 {
                     jLabel18.setVisible(true);
@@ -1049,9 +1276,56 @@ public class Homepage extends javax.swing.JFrame {
     private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField10ActionPerformed
-
+public void initNull(){
+    jTextField5.setText("");
+            jTextField10.setText("");
+    jTextField6.setText("");
+            jTextField7.setText("");
+            jTextField11.setText("");
+                    jTextField8.setText("");
+                    jTextField9.setText("");
+                            jTextField4.setText("");
+}
+public void disableAll()
+{
+    jButton7.setEnabled(false);
+    jButton8.setEnabled(false);
+    jButton17.setEnabled(false);
+    jButton6.setEnabled(false);
+    jButton13.setEnabled(false);
+    jButton12.setEnabled(false);
+    jButton14.setEnabled(false);
+    jButton15.setEnabled(false);
+}
+public void enableAll()
+{
+    jButton7.setEnabled(true);
+    jButton8.setEnabled(true);
+    jButton17.setEnabled(true);
+    jButton6.setEnabled(true);
+    jButton13.setEnabled(true);
+    jButton12.setEnabled(true);
+    jButton14.setEnabled(true);
+    jButton15.setEnabled(true);
+}
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
         // TODO add your handling code here:
+        if(jTextField5.getText().isEmpty())
+        {
+            JOptionPane.showMessageDialog(this, "Enter New Player Info"); 
+            jTextField5.setEditable(true);
+            turnOn();
+            jButton18.setVisible(true);
+            jButton21.setVisible(false);
+                    jButton20.setVisible(false);
+                    jButton10.setVisible(false);
+                    jTextField10.setText(jLabel3.getText());
+                    disableAll();
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Player Already added. Type New Player Info");   
+        }
+        
     }//GEN-LAST:event_jButton19ActionPerformed
     
     public void turnOn()
@@ -1089,10 +1363,31 @@ public class Homepage extends javax.swing.JFrame {
 
     private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
         // TODO add your handling code here:
+        jLabel6.setVisible(false);
+        String temp = jTextField5.getText();
+        if(temp.isEmpty())
+        {
+            jLabel6.setText("Select A Row To Operate");
+            jLabel6.setVisible(true);
+            return;
+        }
+        Player_Sell_Page obj = new Player_Sell_Page();
+        String name = jTextField5.getText();
+             String clubname =  jTextField10.getText();
+            String countryname = jTextField6.getText();
+                    String Age_now =  jTextField7.getText();
+                            String Height_now  =  jTextField8.getText();
+                            String Salary_now  =  jTextField9.getText();
+                            String position_now =  jTextField4.getText();
+        
+        obj.passValues(this,name,clubname,countryname,Age_now,Height_now,Salary_now,position_now);
+        obj.setVisible(true);
+        
     }//GEN-LAST:event_jButton21ActionPerformed
 
     public void DOTABLE2() throws SQLException
     {
+        TOTALCOACH =0;
             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
             String sql2 = "select * from coach_details where clubName = ?";
             PreparedStatement plat2 = c.prepareStatement(sql2);
@@ -1104,6 +1399,7 @@ public class Homepage extends javax.swing.JFrame {
             
             while(rs2.next()){
                 check2 = 1;
+                TOTALCOACH  = TOTALCOACH +  rs2.getInt("salary");
                  String[] std = new String[] {rs2.getString(1), rs2.getString(3), rs2.getString(4)} ;
                  model2.addRow( std);
                  jLabel8.setVisible(false);
@@ -1134,10 +1430,13 @@ public class Homepage extends javax.swing.JFrame {
             int check =0;
             
             while(rs.next()){
+                if(rs.getString("market_status").equals("0")){
                 check = 1;
+                 TOTALSALARY  = TOTALSALARY +  rs.getInt("Salary");
                  String[] std = new String[] {rs.getString(1), rs.getString(3), rs.getString(4), rs.getString(5),rs.getString(6),rs.getString(7),rs.getString(8) } ;
                  model.addRow( std);
                  jLabel18.setVisible(false);
+                }
             }
             if(check ==0)
             {
@@ -1145,7 +1444,8 @@ public class Homepage extends javax.swing.JFrame {
             }
             plat.close();
            DOTABLE2();
-            
+           int p = TOTALSALARY+TOTALCOACH;
+            jButton16.setText("Total Salary: "+p);
             
            // JOptionPane.showMessageDialog(this,"Data Viewed");
             c.close();
@@ -1184,7 +1484,7 @@ public class Homepage extends javax.swing.JFrame {
                jLabel18.setVisible(false);
             String searchSTN = jTextField2.getText();
             int check =0;
-            
+            TOTALSALARY = 0;
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             int r = jTable1.getRowCount();
             while( r-- > 0)
@@ -1198,6 +1498,8 @@ public class Homepage extends javax.swing.JFrame {
                 
                 while(rs.next()){
                     if(rs.getString("clubName").equals(cnm)){
+                        if(rs.getString("market_status").equals("0")){
+                        TOTALSALARY = TOTALSALARY + rs.getInt("Salary");
                     check = 1;
                     java.util.Vector v = new java.util.Vector();
                     v.add(rs.getString("Name"));
@@ -1209,8 +1511,10 @@ public class Homepage extends javax.swing.JFrame {
                     v.add(rs.getString("Salary"));
 
                    dtm.addRow(v);
+                        }
                     }
                 }
+                jButton16.setText("Total Salary: "+TOTALSALARY);
                 if(check == 0)
                 {
                     jLabel18.setVisible(true);
@@ -1225,14 +1529,11 @@ public class Homepage extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         
-       // String s = model.getValueAt(0, 0).toString();
-       // String quers = "SELECT * FROM jTable1 WHERE Name = ?";
-        
             int row = jTable1.getSelectedRow();
             if(model.getRowCount() == 0){
                 model = (DefaultTableModel)jTable1.getModel();
             }
-            System.out.println(""+model.getRowCount());
+            System.out.println(""+row);
         jTextField5.setText(model.getValueAt(row, 0).toString());
         jTextField10.setText(jLabel3.getText());
         jTextField6.setText(model.getValueAt(row, 1).toString());
@@ -1267,7 +1568,6 @@ public class Homepage extends javax.swing.JFrame {
                 }
             
             plat.setString(1,jTextField6.getText());
-
             plat.setString(2,jTextField4.getText());
             plat.setBoolean(3,player_statussd);
             plat.setInt(4,Integer.parseInt(jTextField7.getText()));
@@ -1404,7 +1704,7 @@ public class Homepage extends javax.swing.JFrame {
             String name = jTextField12.getText();
             String cnm = jLabel3.getText();
             int check =0;
-            
+            TOTALSALARY = 0;
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             int r = jTable1.getRowCount();
             while( r-- > 0)
@@ -1417,6 +1717,8 @@ public class Homepage extends javax.swing.JFrame {
                 
                 while(rs.next()){
                     if(rs.getString("clubName").equals(cnm)){
+                        if(rs.getString("market_status").equals("0")){
+                        TOTALSALARY = TOTALSALARY + rs.getInt("Salary");
                     check = 1;
                     java.util.Vector v = new java.util.Vector();
                     v.add(rs.getString("Name"));
@@ -1428,8 +1730,10 @@ public class Homepage extends javax.swing.JFrame {
                     v.add(rs.getString("Salary"));
 
                    dtm.addRow(v);
+                        }
                     }
                 }
+                jButton16.setText("Total Salary: "+TOTALSALARY);
                 if(check == 0)
                 {
                     jLabel18.setVisible(true);
@@ -1446,6 +1750,229 @@ public class Homepage extends javax.swing.JFrame {
         System.out.println(CLUBNAME);
         
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void From_TextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_From_TextFieldKeyReleased
+        // TODO add your handling code here:
+            jLabel18.setVisible(false);
+            
+            String st1 = From_TextField.getText();
+            String st2 = To_TextField.getText();
+            int jo = 0;
+            int po = 0;
+            try{
+            jLabel6.setVisible(false);    
+            jo = Integer.parseInt(st1);
+            po = Integer.parseInt(st2);
+             if(jo < min)
+            {
+                jLabel6.setText("Minimum Range Start from "+min);
+                jLabel6.setVisible(true);                
+            }
+             else{
+                 if(jo>po)
+                 {
+                jLabel6.setText("Minimum Range must be less than Maximum Range");
+                jLabel6.setVisible(true); 
+                 }
+             }
+            
+            } catch (Exception ex)
+            {
+                jLabel6.setText("Please Input Numbers only");
+                jLabel6.setVisible(true);
+            }
+            
+            TOTALSALARY = 0;
+//            String searchSTN = jTextField2.getText();
+            int check =0;
+//            
+            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            int r = jTable1.getRowCount();
+            while( r-- > 0)
+            {
+                dtm.removeRow(r);
+            }
+            try{
+//               
+                ResultSet rs = DBHELPER.ppData(jo,po,CLUBNAME);
+                String cnm = jLabel3.getText();
+//                
+                while(rs.next()){
+
+                    if(rs.getString("clubName").equals(cnm)){
+                        if(rs.getString("market_status").equals("0")){
+                    TOTALSALARY = TOTALSALARY + rs.getInt("Salary");
+                    check = 1;
+                    java.util.Vector v = new java.util.Vector();
+                    v.add(rs.getString("Name"));
+                    v.add(rs.getString("country"));
+                    v.add(rs.getString("position"));
+                    v.add(rs.getString("player_status"));
+                    v.add(rs.getString("age"));
+                    v.add(rs.getString("Height"));
+                    v.add(rs.getString("Salary"));
+
+                   dtm.addRow(v);
+                        }
+                    }
+                }
+                jButton16.setText("Total Salary: "+TOTALSALARY);
+                if(check == 0)
+                {
+                    jLabel18.setVisible(true);
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_From_TextFieldKeyReleased
+
+    private void To_TextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_To_TextFieldKeyReleased
+        // TODO add your handling code here:
+            jLabel18.setVisible(false);
+            
+            String st2 = To_TextField.getText();
+            String st1 = From_TextField.getText();
+            int jo = 1000000;
+            int po = 1000000;
+            try{
+            jLabel6.setVisible(false);    
+            po = Integer.parseInt(st2);
+            jo = Integer.parseInt(st1);
+             if(po > max)
+            {
+                jLabel6.setText("Maximum Range is "+max);
+                jLabel6.setVisible(true);                
+            }
+            else{
+                 if(po<jo)
+                 {
+                jLabel6.setText("Maximum Range must be than greater than Minimum Range");
+                jLabel6.setVisible(true); 
+                 }
+             }
+            
+            } catch (Exception ex)
+            {
+                jLabel6.setText("Please Input Numbers only");
+                jLabel6.setVisible(true);
+            }
+            TOTALSALARY = 0;
+            
+            
+//            String searchSTN = jTextField2.getText();
+            int check =0;
+//            
+            DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+            int r = jTable1.getRowCount();
+            while( r-- > 0)
+            {
+                dtm.removeRow(r);
+            }
+            try{
+//               
+                ResultSet rs = DBHELPER.ppData(jo,po,CLUBNAME);
+                String cnm = jLabel3.getText();
+//                
+                while(rs.next()){
+
+                    if(rs.getString("clubName").equals(cnm)){
+                        if(rs.getString("market_status").equals("0")){
+                      TOTALSALARY = TOTALSALARY + rs.getInt("Salary");
+                    check = 1;
+                    java.util.Vector v = new java.util.Vector();
+                    v.add(rs.getString("Name"));
+                    v.add(rs.getString("country"));
+                    v.add(rs.getString("position"));
+                    v.add(rs.getString("player_status"));
+                    v.add(rs.getString("age"));
+                    v.add(rs.getString("Height"));
+                    v.add(rs.getString("Salary"));
+
+                   dtm.addRow(v);
+                        }
+                    }
+                }
+                jButton16.setText(""+TOTALSALARY);
+                if(check == 0)
+                {
+                    jLabel18.setVisible(true);
+                }
+            } catch (SQLException ex) {
+            Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+        }            
+            
+            
+    }//GEN-LAST:event_To_TextFieldKeyReleased
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+        jLabel6.setVisible(false);
+                                 int ok=0;
+                            try {          
+                                Connection cd = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                                String selectSQL = "SELECT * FROM player_details WHERE Name = ?";
+                                PreparedStatement plater = cd.prepareStatement(selectSQL);
+                                plater.setString(1, jTextField5.getText());
+                                
+                                // execute select SQL stetement
+                                    ResultSet rs = plater.executeQuery();
+
+                                        try {
+                                           while (rs.next()) {
+                                           String username = rs.getString("Name");
+                                           jLabel6.setText(username + " Already Exist in the Database");
+                                           jLabel6.setVisible(true);
+                                             ok = 1;
+                                             cd.close();
+                                           plater.close();
+                                           break;
+                                          }
+                                    } catch (SQLException e1) {
+                                                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e1);
+                                    }
+                            }
+                            catch (SQLException ex) {
+                                 Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+
+                    if(ok==0){
+                     try {
+               Boolean player_statussd = false;
+                if(jTextField11.getText().equals("Yes"))
+                {
+                    player_statussd = true;
+                }
+                            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                            String sql = "insert into player_details (Name,clubName , country,position,player_status,age,Height,Salary,market_status) values (?,?,?,?,?,?,?,?,?)";
+                            PreparedStatement plat = c.prepareStatement(sql);
+                                       plat.setString(1,jTextField5.getText());
+                                        plat.setString(2,jTextField10.getText());                            
+                            
+                                       plat.setString(3,jTextField6.getText());
+                                        plat.setString(4, jTextField4.getText());
+                                         plat.setBoolean(5,player_statussd);
+                                        plat.setInt(6,Integer.parseInt(jTextField7.getText()));
+                                        plat.setFloat(7,Float.parseFloat(jTextField8.getText()));
+                                        plat.setInt(8,Integer.parseInt(jTextField9.getText()));
+                                        plat.setBoolean(9,false);
+                                        plat.executeUpdate();
+                                        JOptionPane.showMessageDialog(this,"Data inserted");
+                                        c.close();
+                                        plat.close();
+                            jButton18.setVisible(false);
+                            jTextField5.setEditable(false);
+                            turnOff();
+                            jButton21.setVisible(true);
+                            jButton20.setVisible(true);
+                            jButton10.setVisible(true);
+                            enableAll();
+                            lol();
+                     }   catch (SQLException ex) {
+                           Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, ex);
+                     }
+                    }
+    }//GEN-LAST:event_jButton18ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1483,6 +2010,8 @@ public class Homepage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField From_TextField;
+    private javax.swing.JTextField To_TextField;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -1492,6 +2021,7 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
@@ -1531,12 +2061,10 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTabDS;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
@@ -1560,5 +2088,9 @@ public class Homepage extends javax.swing.JFrame {
         
         
 //        jLabel10.setIcon(imagess);
+    }
+
+    void RemovePlayerInfo(String text) {
+        lol();
     }
 }

@@ -3,15 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Loading_page.java</file>
-            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Register_page2.java</file>
-            <file>file:/G:/fx/ProjectFinal/src/Class/DBHELPER.java</file>
-            <file>file:/G:/fx/ProjectFinal/src/Class/USER.java</file>
-            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Homepage.java</file>
-            <file>file:/G:/fx/ProjectFinal/src/projectfinal/forgetPassword_page.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Squad_Formation_page.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/squad_practice.java</file>
             <file>file:/G:/fx/ProjectFinal/src/projectfinal/Player_Record.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Change_password.java</file>
             <file>file:/G:/fx/ProjectFinal/src/projectfinal/Login_page.java</file>
-            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Register_page1.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Match_schedule_page.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/squard2_formation.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Register_page2.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Homepage.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Market_page.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Settings_page.java</file>
+            <file>file:/G:/fx/ProjectFinal/src/projectfinal/Change_clubName.java</file>
             <file>file:/G:/fx/ProjectFinal/src/projectfinal/Schedule_add.java</file>
         </group>
     </open-files>

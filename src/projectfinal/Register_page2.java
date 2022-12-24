@@ -194,6 +194,11 @@ public class Register_page2 extends javax.swing.JFrame {
         jPanel2.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(257, 149, 160, -1));
 
         jTextField4.setToolTipText("Salary");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 110, 30));
         jTextField4.getAccessibleContext().setAccessibleDescription("Coach_Salary");
 
@@ -652,6 +657,10 @@ public class Register_page2 extends javax.swing.JFrame {
         int p = obj.passAddedSchedule();
         jLabel25.setText(""+ (q-p));
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments

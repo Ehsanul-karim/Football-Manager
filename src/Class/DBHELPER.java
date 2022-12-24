@@ -23,6 +23,7 @@ public class DBHELPER {
     public static PreparedStatement getData;
     public static PreparedStatement petData;
     public static PreparedStatement posData;
+    public static PreparedStatement ppData;
     static{
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,7 +32,7 @@ public class DBHELPER {
             getData = conn.prepareStatement("select * from player_details where country like ?");
             petData = conn.prepareStatement("select * from player_details where Name like ?");
             posData = conn.prepareStatement("select * from player_details where  position like ?");
-            
+            ppData = conn.prepareStatement("SELECT * FROM player_details WHERE Salary >= ? AND Salary <= ?");
             
             
             
@@ -55,7 +56,18 @@ public class DBHELPER {
     public static ResultSet posData(String name,String club) throws SQLException{
         posData.setString(1,"%"+name+"%");
        // posData.setString(2,club);
+       
         return posData.executeQuery();
     }
+    public static ResultSet ppData(int name,int drama,String club) throws SQLException{
+       
+       ppData.setInt(1,name);
+        ppData.setInt(2,drama);
+       // ppData = conn.prepareStatement("SELECT * FROM player_details WHERE BETWEEN '"+?+"' and '"+drama+"' ");
+
+        System.out.println(ppData);
+       // posData.setString(2,club);
+        return ppData.executeQuery();
+    }    
     
 }

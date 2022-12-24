@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.logging.Level;
@@ -135,7 +136,8 @@ public class Schedule_add extends javax.swing.JFrame {
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, 146, 36));
 
         jTextField1.setBackground(java.awt.SystemColor.activeCaption);
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextField1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(51, 51, 51));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -184,20 +186,45 @@ public class Schedule_add extends javax.swing.JFrame {
         o +=1;        
         Date strdd = jDateChooser2.getDate();
         String strdate = ""+strdd;
+        
+        int matchNUMBER = 0 ;
+        try{
+                              Connection cd = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                                String selectSQL = "SELECT * FROM match_details";
+                                PreparedStatement plater = cd.prepareStatement(selectSQL);
+                                
+                                // execute select SQL stetement
+                                    ResultSet rs2 = plater.executeQuery();
+                                        try {
+                                           while (rs2.next()) {
+                                            matchNUMBER= rs2.getInt("matchNumber");
+                                           }
+                                        } catch (SQLException e1) {
+                                                Logger.getLogger(Login_page.class.getName()).log(Level.SEVERE, null, e1);
+                                        } 
+        }
+        catch(Exception e)
+        {
+            Logger.getLogger(Schedule_add.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        matchNUMBER++;
+        
  try {
                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
-                            String sql = "insert into match_details (opponent,datetime , clubname, matchType) values (?,?,?,?)";
+                            String sql = "insert into match_details (opponent,datetime , clubname, matchType,matchNumber) values (?,?,?,?,?)";
                             PreparedStatement plat = c.prepareStatement(sql);
                             plat.setString(1,jTextField1.getText());
                             plat.setString(2,strdate);
                             plat.setString(3,jLabel3.getText());
-                            plat.setBoolean(4,matchType);          
+                            plat.setBoolean(4,matchType);     
+                             plat.setInt(5,matchNUMBER);
                           plat.executeUpdate();
                           JOptionPane.showMessageDialog(this,"Data inserted");
                           c.close();
                        plat.close();
                      }   catch (SQLException ex) {
-                           JOptionPane.showMessageDialog(this,"Please Insert All Field");
+                            Logger.getLogger(Schedule_add.class.getName()).log(Level.SEVERE, null, ex);
                      }
         setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -283,6 +310,11 @@ public class Schedule_add extends javax.swing.JFrame {
     int passAddedSchedule()
     {
         return o;
+    }
+
+    void passNamePAGE(String text) {
+        jLabel3.setText(text);
+        jLabel3.setVisible(true);
     }
         
 }
