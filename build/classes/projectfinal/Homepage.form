@@ -626,6 +626,11 @@
               </Layout>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabel10">
+                  <Properties>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Images/ManULogo2.png"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -1113,13 +1118,13 @@
         <Component class="javax.swing.JLabel" name="jLabel17">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="16" style="0"/>
+              <Font name="Segoe UI" size="20" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Renewable :"/>
+            <Property name="text" type="java.lang.String" value="Injury ? :"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="610" y="360" width="90" height="40"/>
+              <AbsoluteConstraints x="610" y="360" width="80" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -1178,7 +1183,7 @@
                     <Column editable="true" title="Name" type="java.lang.Object"/>
                     <Column editable="true" title="Country" type="java.lang.Object"/>
                     <Column editable="true" title="Position" type="java.lang.Object"/>
-                    <Column editable="true" title="Renewable" type="java.lang.Object"/>
+                    <Column editable="true" title="Injury Status" type="java.lang.Object"/>
                     <Column editable="true" title="Age" type="java.lang.Object"/>
                     <Column editable="true" title="Height" type="java.lang.Object"/>
                     <Column editable="true" title="Salary" type="java.lang.Object"/>

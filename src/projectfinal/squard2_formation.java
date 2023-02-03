@@ -64,6 +64,7 @@ public class squard2_formation extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         formation = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -98,6 +99,9 @@ public class squard2_formation extends javax.swing.JFrame {
         formation.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         formation.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.add(formation, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 560, 200, 40));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/gradient-football-field-background_52683-66772.png"))); // NOI18N
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 620));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,6 +215,7 @@ public class squard2_formation extends javax.swing.JFrame {
     private javax.swing.JLabel formation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 

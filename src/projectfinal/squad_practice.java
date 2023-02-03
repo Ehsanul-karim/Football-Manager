@@ -5,8 +5,14 @@
 package projectfinal;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,14 +23,17 @@ import java.util.Objects;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
 
 /**
  *
  * @author Ehsan
  */
-public class squad_practice extends javax.swing.JFrame {
+public class squad_practice extends javax.swing.JFrame implements MouseListener, MouseMotionListener{
 
     /**
      * Creates new form squad_practice
@@ -32,11 +41,14 @@ public class squad_practice extends javax.swing.JFrame {
     String Formation;
     private int currentCard = 0;
      private CardLayout cl;
-
-     
+     Point p;
+     Border blackline = BorderFactory.createLineBorder(Color.black);
+//     Point startPoint;
     final ImageIcon userIcon = new ImageIcon(Objects.requireNonNull(this.getClass().getResource("/Images/user_male_26px.png")));
     public squad_practice() {
         initComponents();
+        CB1.addMouseListener(this);
+        CB1.addMouseMotionListener(this);
         turnOff2();
         
         cl = new CardLayout();
@@ -54,8 +66,6 @@ public class squad_practice extends javax.swing.JFrame {
         cardPanel.add(jp442, "5");
         
         cardPanel.add(jp541, "6");
-        
-        
     }
     public void turnOn()
     {
@@ -97,8 +107,6 @@ public class squad_practice extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        j2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         NAME = new javax.swing.JLabel();
         POS = new javax.swing.JLabel();
@@ -195,6 +203,7 @@ public class squad_practice extends javax.swing.JFrame {
         f6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -206,17 +215,7 @@ public class squad_practice extends javax.swing.JFrame {
         jPanel2.setToolTipText("");
         jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel2.setLayout(new javax.swing.BoxLayout(jPanel2, javax.swing.BoxLayout.Y_AXIS));
-
-        j2.setText("________________________________");
-        jPanel2.add(j2);
-
-        jLabel3.setBackground(new java.awt.Color(102, 255, 102));
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 3, 23)); // NOI18N
-        jLabel3.setText("Substitute Bench");
-        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0)));
-        jPanel2.add(jLabel3);
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 170, 600));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 230, 600));
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -285,7 +284,7 @@ public class squad_practice extends javax.swing.JFrame {
         name_of_club.setText("Manchester United");
         jPanel1.add(name_of_club, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 270, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 0, 270, 600));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 270, 600));
 
         cardPanel.setLayout(new java.awt.CardLayout());
 
@@ -304,6 +303,9 @@ public class squad_practice extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CB1MouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                CB1MousePressed(evt);
+            }
         });
         jp352.add(CB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 400, 120, 60));
 
@@ -316,7 +318,7 @@ public class squad_practice extends javax.swing.JFrame {
                 CF2MouseClicked(evt);
             }
         });
-        jp352.add(CF2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 90, 60));
+        jp352.add(CF2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 100, 60));
 
         CB2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
@@ -348,8 +350,14 @@ public class squad_practice extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 DML1MouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                DML1MousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                DML1MouseReleased(evt);
+            }
         });
-        jp352.add(DML1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, 110, 60));
+        jp352.add(DML1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 110, 60));
 
         DML2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
@@ -360,7 +368,7 @@ public class squad_practice extends javax.swing.JFrame {
                 DML2MouseClicked(evt);
             }
         });
-        jp352.add(DML2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, 120, 60));
+        jp352.add(DML2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 120, 60));
 
         RMF.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RMF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
@@ -371,7 +379,7 @@ public class squad_practice extends javax.swing.JFrame {
                 RMFMouseClicked(evt);
             }
         });
-        jp352.add(RMF, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 290, 100, 60));
+        jp352.add(RMF, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 260, 100, 60));
 
         LMF.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LMF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
@@ -382,7 +390,7 @@ public class squad_practice extends javax.swing.JFrame {
                 LMFMouseClicked(evt);
             }
         });
-        jp352.add(LMF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 120, 60));
+        jp352.add(LMF, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 120, 60));
 
         AMF.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         AMF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
@@ -393,7 +401,7 @@ public class squad_practice extends javax.swing.JFrame {
                 AMFMouseClicked(evt);
             }
         });
-        jp352.add(AMF, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 100, 60));
+        jp352.add(AMF, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 100, 60));
 
         CF1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
@@ -431,7 +439,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         GK1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         GK1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        GK1.setText("Messi");
+        GK1.setText("Null");
         GK1.setToolTipText("");
         GK1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -442,7 +450,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CF3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CF3.setText("Messi");
+        CF3.setText("Null");
         CF3.setToolTipText("");
         CF3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -453,40 +461,40 @@ public class squad_practice extends javax.swing.JFrame {
 
         AMF1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         AMF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        AMF1.setText("Messi");
+        AMF1.setText("Null");
         AMF1.setToolTipText("");
         AMF1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 AMF1MouseClicked(evt);
             }
         });
-        jp41212.add(AMF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 170, 110, 60));
+        jp41212.add(AMF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 110, 60));
 
         LMF1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LMF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LMF1.setText("Messi");
+        LMF1.setText("Null");
         LMF1.setToolTipText("");
         LMF1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LMF1MouseClicked(evt);
             }
         });
-        jp41212.add(LMF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 120, 60));
+        jp41212.add(LMF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 60));
 
         RMF1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RMF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RMF1.setText("Messi");
+        RMF1.setText("Null");
         RMF1.setToolTipText("");
         RMF1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RMF1MouseClicked(evt);
             }
         });
-        jp41212.add(RMF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 100, 60));
+        jp41212.add(RMF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, 100, 60));
 
         DML4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        DML4.setText("Messi");
+        DML4.setText("Null");
         DML4.setToolTipText("");
         DML4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -497,7 +505,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         LB.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LB.setText("Messi");
+        LB.setText("Null");
         LB.setToolTipText("");
         LB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -508,7 +516,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         RB.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RB.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RB.setText("Messi");
+        RB.setText("Null");
         RB.setToolTipText("");
         RB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -519,18 +527,18 @@ public class squad_practice extends javax.swing.JFrame {
 
         CB4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB4.setText("Messi");
+        CB4.setText("Null");
         CB4.setToolTipText("");
         CB4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CB4MouseClicked(evt);
             }
         });
-        jp41212.add(CB4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 100, 60));
+        jp41212.add(CB4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 120, 60));
 
         CF4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CF4.setText("Messi");
+        CF4.setText("Null");
         CF4.setToolTipText("");
         CF4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -541,7 +549,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CB6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB6.setText("Messi");
+        CB6.setText("Null");
         CB6.setToolTipText("");
         CB6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -559,7 +567,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         GK2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         GK2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        GK2.setText("Messi");
+        GK2.setText("NULL");
         GK2.setToolTipText("");
         GK2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -570,7 +578,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CF5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CF5.setText("Messi");
+        CF5.setText("NULL");
         CF5.setToolTipText("");
         CF5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -581,7 +589,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         LWF.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LWF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LWF.setText("Messi");
+        LWF.setText("NULL");
         LWF.setToolTipText("");
         LWF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -592,7 +600,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         RWF.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RWF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RWF.setText("Messi");
+        RWF.setText("NULL");
         RWF.setToolTipText("");
         RWF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -603,7 +611,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         AMF2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         AMF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        AMF2.setText("Messi");
+        AMF2.setText("NULL");
         AMF2.setToolTipText("");
         AMF2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -614,7 +622,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         DML3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        DML3.setText("Messi");
+        DML3.setText("NULL");
         DML3.setToolTipText("");
         DML3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -625,7 +633,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         DML5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        DML5.setText("Messi");
+        DML5.setText("NULL");
         DML5.setToolTipText("");
         DML5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -636,7 +644,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         LB1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LB1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LB1.setText("Messi");
+        LB1.setText("NULL");
         LB1.setToolTipText("");
         LB1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -647,18 +655,18 @@ public class squad_practice extends javax.swing.JFrame {
 
         RB1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RB1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RB1.setText("Messi");
+        RB1.setText("NULL");
         RB1.setToolTipText("");
         RB1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RB1MouseClicked(evt);
             }
         });
-        jp4231.add(RB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 110, 60));
+        jp4231.add(RB1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, 110, 60));
 
         CB5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB5.setText("Messi");
+        CB5.setText("NULL");
         CB5.setToolTipText("");
         CB5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -669,7 +677,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CB8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB8.setText("Messi");
+        CB8.setText("NULL");
         CB8.setToolTipText("");
         CB8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -687,7 +695,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         GK3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         GK3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        GK3.setText("Messi");
+        GK3.setText("Null");
         GK3.setToolTipText("");
         GK3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -698,7 +706,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CF6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CF6.setText("Messi");
+        CF6.setText("Null");
         CF6.setToolTipText("");
         CF6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -709,7 +717,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         LWF1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LWF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LWF1.setText("Messi");
+        LWF1.setText("Null");
         LWF1.setToolTipText("");
         LWF1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -720,7 +728,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         RWF1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RWF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RWF1.setText("Messi");
+        RWF1.setText("Null");
         RWF1.setToolTipText("");
         RWF1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -731,7 +739,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CMF.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CMF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CMF.setText("Messi");
+        CMF.setText("Null");
         CMF.setToolTipText("");
         CMF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -742,7 +750,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         DML6.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        DML6.setText("Messi");
+        DML6.setText("Null");
         DML6.setToolTipText("");
         DML6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -753,7 +761,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         DML7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        DML7.setText("Messi");
+        DML7.setText("Null");
         DML7.setToolTipText("");
         DML7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -764,7 +772,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         LB2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LB2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LB2.setText("Messi");
+        LB2.setText("Null");
         LB2.setToolTipText("");
         LB2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -775,7 +783,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         RB2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RB2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RB2.setText("Messi");
+        RB2.setText("Null");
         RB2.setToolTipText("");
         RB2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -786,7 +794,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CB7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB7.setText("Messi");
+        CB7.setText("Null");
         CB7.setToolTipText("");
         CB7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -797,7 +805,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CB10.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB10.setText("Messi");
+        CB10.setText("Null");
         CB10.setToolTipText("");
         CB10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -815,7 +823,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         GK4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         GK4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        GK4.setText("Messi");
+        GK4.setText("Null");
         GK4.setToolTipText("");
         GK4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -826,29 +834,29 @@ public class squad_practice extends javax.swing.JFrame {
 
         LMF2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LMF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LMF2.setText("Messi");
+        LMF2.setText("Null");
         LMF2.setToolTipText("");
         LMF2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LMF2MouseClicked(evt);
             }
         });
-        jp541.add(LMF2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 120, 60));
+        jp541.add(LMF2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 60));
 
         RMF2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RMF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RMF2.setText("Messi");
+        RMF2.setText("Null");
         RMF2.setToolTipText("");
         RMF2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RMF2MouseClicked(evt);
             }
         });
-        jp541.add(RMF2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 240, 110, 60));
+        jp541.add(RMF2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 220, 110, 60));
 
         CMF1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CMF1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CMF1.setText("Messi");
+        CMF1.setText("Null");
         CMF1.setToolTipText("");
         CMF1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -859,7 +867,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         DML9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        DML9.setText("Messi");
+        DML9.setText("Null");
         DML9.setToolTipText("");
         DML9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -870,69 +878,69 @@ public class squad_practice extends javax.swing.JFrame {
 
         LB3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LB3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LB3.setText("Messi");
+        LB3.setText("Null");
         LB3.setToolTipText("");
         LB3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 LB3MouseClicked(evt);
             }
         });
-        jp541.add(LB3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 120, 60));
+        jp541.add(LB3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 120, 60));
 
         RB3.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RB3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RB3.setText("Messi");
+        RB3.setText("Null");
         RB3.setToolTipText("");
         RB3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 RB3MouseClicked(evt);
             }
         });
-        jp541.add(RB3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 100, 60));
+        jp541.add(RB3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, 100, 60));
 
         CB9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB9.setText("Messi");
+        CB9.setText("Null");
         CB9.setToolTipText("");
         CB9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CB9MouseClicked(evt);
             }
         });
-        jp541.add(CB9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 410, 120, 60));
+        jp541.add(CB9, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 400, 120, 60));
 
         CB11.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB11.setText("Messi");
+        CB11.setText("Null");
         CB11.setToolTipText("");
         CB11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CB11MouseClicked(evt);
             }
         });
-        jp541.add(CB11, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 440, 120, 60));
+        jp541.add(CB11, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 430, 120, 60));
 
         CF8.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CF8.setText("Messi");
+        CF8.setText("Null");
         CF8.setToolTipText("");
         CF8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CF8MouseClicked(evt);
             }
         });
-        jp541.add(CF8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 90, 60));
+        jp541.add(CF8, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, 90, 60));
 
         CB12.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB12.setText("Messi");
+        CB12.setText("Null");
         CB12.setToolTipText("");
         CB12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CB12MouseClicked(evt);
             }
         });
-        jp541.add(CB12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 410, 120, 60));
+        jp541.add(CB12, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 120, 60));
 
         f5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/pngegg (4).png"))); // NOI18N
         jp541.add(f5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 610));
@@ -943,7 +951,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         GK5.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         GK5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        GK5.setText("Messi");
+        GK5.setText("Null");
         GK5.setToolTipText("");
         GK5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -954,7 +962,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CF7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CF7.setText("Messi");
+        CF7.setText("Null");
         CF7.setToolTipText("");
         CF7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -965,7 +973,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         LWF2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LWF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LWF2.setText("Messi");
+        LWF2.setText("Null");
         LWF2.setToolTipText("");
         LWF2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -976,7 +984,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         RWF2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RWF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RWF2.setText("Messi");
+        RWF2.setText("Null");
         RWF2.setToolTipText("");
         RWF2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -987,7 +995,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CMF2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CMF2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CMF2.setText("Messi");
+        CMF2.setText("Null");
         CMF2.setToolTipText("");
         CMF2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -998,7 +1006,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         DML10.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         DML10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        DML10.setText("Messi");
+        DML10.setText("Null");
         DML10.setToolTipText("");
         DML10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1009,7 +1017,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         LB4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         LB4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        LB4.setText("Messi");
+        LB4.setText("Null");
         LB4.setToolTipText("");
         LB4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1020,7 +1028,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         RB4.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         RB4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        RB4.setText("Messi");
+        RB4.setText("Null");
         RB4.setToolTipText("");
         RB4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1031,7 +1039,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CB13.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB13.setText("Messi");
+        CB13.setText("Null");
         CB13.setToolTipText("");
         CB13.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1042,7 +1050,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CF9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CF9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CF9.setText("Messi");
+        CF9.setText("Null");
         CF9.setToolTipText("");
         CF9.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1053,7 +1061,7 @@ public class squad_practice extends javax.swing.JFrame {
 
         CB15.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         CB15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/user_male_26px.png"))); // NOI18N
-        CB15.setText("Messi");
+        CB15.setText("Null");
         CB15.setToolTipText("");
         CB15.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1070,12 +1078,12 @@ public class squad_practice extends javax.swing.JFrame {
         getContentPane().add(cardPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 600));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        
+        jPanel2.removeAll();
         setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1112,289 +1120,1992 @@ public class squad_practice extends javax.swing.JFrame {
     }//GEN-LAST:event_CB1MouseClicked
 
     private void CF2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF2MouseClicked
-       // TODO add your handling code here:
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_CF2MouseClicked
 
     private void CB2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB2MouseClicked
         // TODO add your handling code here:
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_CB2MouseClicked
 
     private void CB3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB3MouseClicked
         // TODO add your handling code here:
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB3.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_CB3MouseClicked
 
     private void DML1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML1MouseClicked
-       // TODO add your handling code here:
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_DML1MouseClicked
 
     private void DML2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML2MouseClicked
-        // TODO add your handling code here:
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_DML2MouseClicked
 
     private void RMFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RMFMouseClicked
- // TODO add your handling code here:
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RMF.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        } // TODO add your handling code here:
     }//GEN-LAST:event_RMFMouseClicked
 
     private void LMFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LMFMouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LMF.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }
                // TODO add your handling code here:
     }//GEN-LAST:event_LMFMouseClicked
-
+//private void DML1MouseDragged(java.awt.event.MouseEvent e){
+//                    Point currentLocation = new Point(DML1.getLocation());
+//                    Point p = e.getPoint();
+//                    currentLocation.x = (int) p.getX();
+//                    currentLocation.y = (int) p.getY() - 250; // Height/2
+//                    DML1.setLocation(currentLocation);                                
+//}    
+    
     private void AMFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AMFMouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, AMF.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }          
     }//GEN-LAST:event_AMFMouseClicked
 
     private void CF1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }          
     }//GEN-LAST:event_CF1MouseClicked
 
     private void GKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GKMouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, GK.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }        
        
 
     }//GEN-LAST:event_GKMouseClicked
 
     private void GK1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GK1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, GK1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         
 
     }//GEN-LAST:event_GK1MouseClicked
 
     private void CF3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF3MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF3.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         
     }//GEN-LAST:event_CF3MouseClicked
 
     private void AMF1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AMF1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, AMF1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         
     }//GEN-LAST:event_AMF1MouseClicked
+public String separate(String jst){
+String mystring = jst;
+String arr[] = mystring.split("-", 2);
 
+String firstWord = arr[0];   //the
+return firstWord;
+}
     private void LMF1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LMF1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LMF1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         
     }//GEN-LAST:event_LMF1MouseClicked
 
     private void RMF1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RMF1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RMF1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         
     }//GEN-LAST:event_RMF1MouseClicked
 
     private void DML4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML4MouseClicked
-        // TODO add your handling code here:
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML4.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
         
     }//GEN-LAST:event_DML4MouseClicked
 
     private void LBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LBMouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LB.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         
     }//GEN-LAST:event_LBMouseClicked
 
     private void RBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RBMouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RB.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        } 
         
     }//GEN-LAST:event_RBMouseClicked
 
     private void CB4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB4MouseClicked
-        // TODO add your handling code here:
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB4.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
         
     }//GEN-LAST:event_CB4MouseClicked
 
     private void CF4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF4MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF4.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         
     }//GEN-LAST:event_CF4MouseClicked
 
     private void CB6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB6MouseClicked
-        // TODO add your handling code here:
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB6.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
         
     }//GEN-LAST:event_CB6MouseClicked
 
     private void GK2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GK2MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, GK2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
 
     }//GEN-LAST:event_GK2MouseClicked
 
     private void CF5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF5MouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF5.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_CF5MouseClicked
 
     private void LWFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LWFMouseClicked
- 
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LWF.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here: 
     }//GEN-LAST:event_LWFMouseClicked
 
     private void RWFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RWFMouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RWF.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_RWFMouseClicked
 
     private void AMF2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AMF2MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, AMF2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_AMF2MouseClicked
 
     private void DML3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML3MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML3.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_DML3MouseClicked
 
     private void DML5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML5MouseClicked
         // TODO add your handling code here:
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML5.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_DML5MouseClicked
 
     private void LB1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LB1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LB1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_LB1MouseClicked
 
     private void RB1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RB1MouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RB1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     
     }//GEN-LAST:event_RB1MouseClicked
 
     private void CB5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB5MouseClicked
         // TODO add your handling code here:
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB5.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CB5MouseClicked
 
     private void CB8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB8MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB8.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CB8MouseClicked
 
     private void GK3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GK3MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, GK3.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
 
     }//GEN-LAST:event_GK3MouseClicked
 
     private void CF6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF6MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF6.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CF6MouseClicked
 
     private void LWF1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LWF1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LWF1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_LWF1MouseClicked
 
     private void RWF1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RWF1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RWF1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_RWF1MouseClicked
 
     private void CMFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CMFMouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CMF.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CMFMouseClicked
 
     private void DML6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML6MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML6.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_DML6MouseClicked
 
     private void DML7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML7MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML7.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_DML7MouseClicked
 
     private void LB2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LB2MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LB2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_LB2MouseClicked
 
     private void RB2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RB2MouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RB2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
        
     }//GEN-LAST:event_RB2MouseClicked
 
     private void CB7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB7MouseClicked
         // TODO add your handling code here:
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB7.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CB7MouseClicked
 
     private void CB10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB10MouseClicked
         // TODO add your handling code here:
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB10.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CB10MouseClicked
 
     private void GK4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GK4MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, GK4.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
 
     }//GEN-LAST:event_GK4MouseClicked
 
     private void LMF2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LMF2MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LMF2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_LMF2MouseClicked
 
     private void RMF2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RMF2MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RMF2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_RMF2MouseClicked
 
     private void CMF1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CMF1MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CMF1.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CMF1MouseClicked
 
     private void DML9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML9MouseClicked
         // TODO add your handling code here:
-        
+                turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML9.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:    
     }//GEN-LAST:event_DML9MouseClicked
 
     private void LB3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LB3MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LB3.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_LB3MouseClicked
 
     private void RB3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RB3MouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RB3.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
         
     }//GEN-LAST:event_RB3MouseClicked
 
     private void CB9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB9MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB9.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CB9MouseClicked
 
     private void CB11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB11MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB11.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CB11MouseClicked
 
     private void CF8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF8MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF8.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CF8MouseClicked
 
     private void CB12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB12MouseClicked
         // TODO add your handling code here:
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB12.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_CB12MouseClicked
 
     private void GK5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GK5MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, GK5.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
 
     }//GEN-LAST:event_GK5MouseClicked
 
     private void CF7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF7MouseClicked
-       
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF7.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:       
     }//GEN-LAST:event_CF7MouseClicked
 
     private void LWF2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LWF2MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LWF2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_LWF2MouseClicked
 
     private void RWF2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RWF2MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RWF2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_RWF2MouseClicked
 
     private void CMF2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CMF2MouseClicked
-       
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CMF2.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:       
     }//GEN-LAST:event_CMF2MouseClicked
 
     private void DML10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML10MouseClicked
         // TODO add your handling code here:
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, DML10.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_DML10MouseClicked
 
     private void LB4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LB4MouseClicked
-        
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, LB4.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:        
     }//GEN-LAST:event_LB4MouseClicked
 
     private void RB4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RB4MouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, RB4.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_RB4MouseClicked
 
     private void CB13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB13MouseClicked
         // TODO add your handling code here:
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB13.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_CB13MouseClicked
 
     private void CF9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CF9MouseClicked
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CF9.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_CF9MouseClicked
 
     private void CB15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB15MouseClicked
         // TODO add your handling code here:
-
+            turnOff2();
+                try {
+            // TODO add your handling code here:
+            // TODO add your handling code here:
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "select * from player_details where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1, CB15.getText());
+            ResultSet rs = plat.executeQuery();
+            
+            while(rs.next()){
+                    NAME.setText(rs.getString("Name"));
+                    COUNTRY.setText(rs.getString("country"));
+                    POS.setText(rs.getString("position"));          
+                    CLUB.setText(rs.getString("clubName"));                    
+                    AGGE.setText(rs.getString("age")+" Years old");
+                    HEIGHT.setText(rs.getString("Height")+" cm");
+                    SALARY.setText(rs.getString("Salary")+"$");
+                    MKT_VALUE.setText(rs.getString("market_price")+"$");
+                    
+                    turnOn();
+                    
+                    break;
+            } 
+        } catch (SQLException ex) {
+            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+        }         // TODO add your handling code here:
     }//GEN-LAST:event_CB15MouseClicked
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
@@ -1424,8 +3135,18 @@ public class squad_practice extends javax.swing.JFrame {
                             int check =0;
                             while(rs.next())
                             {
+                                    
                                  if(rs.getString("market_status").equals("0"))
-                                 {   
+                                 {
+                                if(rs.getString("player_status").equals("1"))
+                                {
+                                    int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                        if(pol == -1)
+                                        {
+                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4)+"⦻");
+                                        }
+                                        continue;
+                                }                                     
                                      if( playerNo <= 11)
                                      {
                                          if(rs.getString(4).equals("CF"))
@@ -1663,7 +3384,411 @@ public class squad_practice extends javax.swing.JFrame {
             System.out.print(", ");
       }
          System.out.println("\n");      
-                 
+         {
+                    JLabel j = new JLabel();
+                    j.setText("________________________________");
+                    j.setSize(160, 16);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }
+         {
+                    JLabel j = new JLabel();
+                    j.setText("Substitute Bench");
+                    j.setSize(161, 29);
+                    j.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC, 23));
+                    j.setBorder(blackline);
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }            
+      while(substituteiterate.hasNext()) {
+          String jst = substituteiterate.next();
+            int rol = addsubstitute.indexOf(""+jst);
+             if(rol == -1)
+             {
+                 int x_pressed = 0;
+                 int y_pressed = 0;
+                     addsubstitute.add(""+jst);
+                     JLabel j = new JLabel();
+                    j.setText(""+jst);
+                    j.setSize(140, 30);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+                    j.setIcon(userIcon);
+                    jPanel2.add(j);
+                    j.addMouseListener(new MouseAdapter()
+                    {
+                       public void  mouseClicked(MouseEvent e)
+                       {
+                        turnOff2();
+                        
+                        try {
+                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                             String sql = "select * from player_details where Name = ?";
+                             PreparedStatement plat = c.prepareStatement(sql);
+                             
+                             String p = separate(jst);
+                             System.out.println(""+p);
+                             
+                             plat.setString(1, separate(jst));
+                             ResultSet rs = plat.executeQuery();
+            
+                        while(rs.next()){
+                            NAME.setText(rs.getString("Name"));
+                            COUNTRY.setText(rs.getString("country"));
+                            POS.setText(rs.getString("position"));          
+                            CLUB.setText(rs.getString("clubName"));                    
+                            AGGE.setText(rs.getString("age")+" Years old");
+                            HEIGHT.setText(rs.getString("Height")+" cm");
+                            SALARY.setText(rs.getString("Salary")+"$");
+                            MKT_VALUE.setText(rs.getString("market_price")+"$");                   
+                            turnOn();                  
+                            break;
+                           } 
+                        } catch (SQLException ex) {
+                                        Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                            }         // TODO add your handling code here:                              
+                    }
+                    });     
+                    Dimension labelDim = new Dimension(100,20);
+                      jPanel2.setPreferredSize(labelDim);
+             }                           
+      }           
+                    }
+                    else if(currentCard == 2)
+                    {
+     Vector<String> substitute= new Vector<>();
+     Vector<String> playing11= new Vector<>();
+     Vector<String> addsubstitute= new Vector<>();
+     
+                        int playerNo = 1;
+                        int CFID=0;
+                        int AMFID=0;
+                        int DMLID=0;
+                        int LMFID=0;
+                        int RMFID=0;
+                        int CBID=0;
+                        int GKID=0;
+                        int RBID = 0;
+                        int LBID = 0;
+                        try {
+                            
+                            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                            String sql = "select * from player_details where clubName = ?";
+                            PreparedStatement plat = c.prepareStatement(sql);
+                            plat.setString(1, name_of_club.getText());
+                            ResultSet rs = plat.executeQuery();
+                            int check =0;
+                            while(rs.next())
+                            {                                
+                                 if(rs.getString("market_status").equals("0"))
+                                 {
+                                if(rs.getString("player_status").equals("1"))
+                                {
+                                    int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                        if(pol == -1)
+                                        {
+                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4)+"@");
+                                        }
+                                        continue;
+                                }                                     
+                                     if( playerNo <= 11)
+                                     {
+                                         if(rs.getString(4).equals("CF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CFID == 0)
+                                                    {
+                                                        CF3.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CFID == 1)
+                                                    {
+                                                        CF4.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CFID++;
+                                                }
+                                                else
+                                                {
+                                                    CFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("AMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(AMFID == 0)
+                                                    {
+                                                        AMF1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     AMFID++;
+                                                }
+                                                else
+                                                {
+                                                    AMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("DML"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(DMLID == 0)
+                                                    {
+                                                        DML4.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     DMLID++;
+                                                }
+                                                else
+                                                {
+                                                    DMLID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LMFID == 0)
+                                                    {
+                                                        LMF1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LMFID++;
+                                                }
+                                                else
+                                                {
+                                                    LMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RMFID == 0)
+                                                    {
+                                                        RMF1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RMFID++;
+                                                }
+                                                else
+                                                {
+                                                    RMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CBID == 0)
+                                                    {
+                                                        CB4.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CBID == 1)
+                                                    {
+                                                        CB6.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CBID++;
+                                                }
+                                                else
+                                                {
+                                                    CBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("GK"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(GKID == 0)
+                                                    {
+                                                        GK1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     GKID++;
+                                                }
+                                                else
+                                                {
+                                                    GKID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RBID == 0)
+                                                    {
+                                                        RB.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RBID++;
+                                                }
+                                                else
+                                                {
+                                                    RBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LBID == 0)
+                                                    {
+                                                        LB.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LBID++;
+                                                }
+                                                else
+                                                {
+                                                    LBID++;
+                                                }
+                                         }                                         
+                                         else
+                                         {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                             
+                                         }
+                                     }
+                                     else
+                                     {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                         
+                                     }
+                                 }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+     Iterator<String> playing11iterate = playing11.iterator();
+     Iterator<String> substituteiterate = substitute.iterator();
+     while(playing11iterate.hasNext()) {
+            System.out.print(playing11iterate.next());
+            System.out.print(", ");
+      }
+         System.out.println("\n");      
+         {
+                    JLabel j = new JLabel();
+                    j.setText("________________________________");
+                    j.setSize(160, 16);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }
+         {
+                    JLabel j = new JLabel();
+                    j.setText("Substitute Bench");
+                    j.setSize(161, 29);
+                    j.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC, 23));
+                    j.setBorder(blackline);
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }         
       while(substituteiterate.hasNext()) {
           String jst = substituteiterate.next();
             int rol = addsubstitute.indexOf(""+jst);
@@ -1676,32 +3801,1593 @@ public class squad_practice extends javax.swing.JFrame {
                     j.setFont(new Font("Times New Roman", Font.PLAIN, 18));
                     j.setIcon(userIcon);
                     jPanel2.add(j);
+                    j.addMouseListener(new MouseAdapter()
+                    {
+                       public void  mouseClicked(MouseEvent e)
+                       {
+                        turnOff2();
+                        
+                        try {
+                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                             String sql = "select * from player_details where Name = ?";
+                             PreparedStatement plat = c.prepareStatement(sql);
+                             
+                             String p = separate(jst);
+                             System.out.println(""+p);
+                             
+                             plat.setString(1, separate(jst));
+                             ResultSet rs = plat.executeQuery();
+            
+                        while(rs.next()){
+                            NAME.setText(rs.getString("Name"));
+                            COUNTRY.setText(rs.getString("country"));
+                            POS.setText(rs.getString("position"));          
+                            CLUB.setText(rs.getString("clubName"));                    
+                            AGGE.setText(rs.getString("age")+" Years old");
+                            HEIGHT.setText(rs.getString("Height")+" cm");
+                            SALARY.setText(rs.getString("Salary")+"$");
+                            MKT_VALUE.setText(rs.getString("market_price")+"$");                   
+                            turnOn();                  
+                            break;
+                           } 
+                        } catch (SQLException ex) {
+                                        Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                            }         // TODO add your handling code here:                              
+                    }
+                    });                    
                     Dimension labelDim = new Dimension(100,20);
                       jPanel2.setPreferredSize(labelDim);
              }                           
-      }           
-        
-      
-                    }
-                    else if(currentCard == 2)
-                    {
-                        
+      }                            
                     }
                     else if(currentCard == 3)
                     {
+     Vector<String> substitute= new Vector<>();
+     Vector<String> playing11= new Vector<>();
+     Vector<String> addsubstitute= new Vector<>();
+     
+                        int playerNo = 1;
+                        int CFID=0;
+                        int AMFID=0;
+                        int DMLID=0;
+                        int LMFID=0;
+                        int RMFID=0;
+                        int CBID=0;
+                        int GKID=0;
+                        int RBID = 0;
+                        int LBID = 0;
+                        int RWFID = 0;
+                        int LWFID = 0;
+                        try {
+                            
+                            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                            String sql = "select * from player_details where clubName = ?";
+                            PreparedStatement plat = c.prepareStatement(sql);
+                            plat.setString(1, name_of_club.getText());
+                            ResultSet rs = plat.executeQuery();
+                            int check =0;
+                            while(rs.next())
+                            {                            
+                                 if(rs.getString("market_status").equals("0"))
+                                 {
+                                if(rs.getString("player_status").equals("1"))
+                                {
+                                    int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                        if(pol == -1)
+                                        {
+                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4)+"⦻");
+                                        }
+                                        continue;
+                                }                                         
+                                     if( playerNo <= 11)
+                                     {
+                                         if(rs.getString(4).equals("CF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CFID == 0)
+                                                    {
+                                                        CF5.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CFID++;
+                                                }
+                                                else
+                                                {
+                                                    CFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("AMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(AMFID == 0)
+                                                    {
+                                                        AMF2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     AMFID++;
+                                                }
+                                                else
+                                                {
+                                                    AMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LWF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LWFID == 0)
+                                                    {
+                                                        LWF.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LWFID++;
+                                                }
+                                                else
+                                                {
+                                                    LWFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RWF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RWFID == 0)
+                                                    {
+                                                        RWF.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RWFID++;
+                                                }
+                                                else
+                                                {
+                                                    RWFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("DML"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(DMLID == 0)
+                                                    {
+                                                        DML3.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    if(DMLID == 1)
+                                                    {
+                                                        DML5.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     DMLID++;
+                                                }
+                                                else
+                                                {
+                                                    DMLID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CBID == 0)
+                                                    {
+                                                        CB5.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CBID == 1)
+                                                    {
+                                                        CB8.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CBID++;
+                                                }
+                                                else
+                                                {
+                                                    CBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("GK"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(GKID == 0)
+                                                    {
+                                                        GK2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     GKID++;
+                                                }
+                                                else
+                                                {
+                                                    GKID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RBID == 0)
+                                                    {
+                                                        RB1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RBID++;
+                                                }
+                                                else
+                                                {
+                                                    RBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LBID == 0)
+                                                    {
+                                                        LB1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LBID++;
+                                                }
+                                                else
+                                                {
+                                                    LBID++;
+                                                }
+                                         }                                         
+                                         else
+                                         {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                             
+                                         }
+                                     }
+                                     else
+                                     {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                         
+                                     }
+                                 }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+     Iterator<String> playing11iterate = playing11.iterator();
+     Iterator<String> substituteiterate = substitute.iterator();
+     while(playing11iterate.hasNext()) {
+            System.out.print(playing11iterate.next());
+            System.out.print(", ");
+      }
+         System.out.println("\n");      
+         {
+                    JLabel j = new JLabel();
+                    j.setText("________________________________");
+                    j.setSize(160, 16);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }
+         {
+                    JLabel j = new JLabel();
+                    j.setText("Substitute Bench");
+                    j.setSize(161, 29);
+                    j.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC, 23));
+                    j.setBorder(blackline);
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }         
+      while(substituteiterate.hasNext()) {
+          String jst = substituteiterate.next();
+            int rol = addsubstitute.indexOf(""+jst);
+             if(rol == -1)
+             {
+                     addsubstitute.add(""+jst);
+                     JLabel j = new JLabel();
+                    j.setText(""+jst);
+                    j.setSize(140, 30);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+                    j.setIcon(userIcon);
+                    jPanel2.add(j);
+                    j.addMouseListener(new MouseAdapter()
+                    {
+                       public void  mouseClicked(MouseEvent e)
+                       {
+                        turnOff2();
                         
+                        try {
+                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                             String sql = "select * from player_details where Name = ?";
+                             PreparedStatement plat = c.prepareStatement(sql);
+                             
+                             String p = separate(jst);
+                             System.out.println(""+p);
+                             
+                             plat.setString(1, separate(jst));
+                             ResultSet rs = plat.executeQuery();
+            
+                        while(rs.next()){
+                            NAME.setText(rs.getString("Name"));
+                            COUNTRY.setText(rs.getString("country"));
+                            POS.setText(rs.getString("position"));          
+                            CLUB.setText(rs.getString("clubName"));                    
+                            AGGE.setText(rs.getString("age")+" Years old");
+                            HEIGHT.setText(rs.getString("Height")+" cm");
+                            SALARY.setText(rs.getString("Salary")+"$");
+                            MKT_VALUE.setText(rs.getString("market_price")+"$");                   
+                            turnOn();                  
+                            break;
+                           } 
+                        } catch (SQLException ex) {
+                                        Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                            }         // TODO add your handling code here:                              
                     }
+                    });                    
+                    Dimension labelDim = new Dimension(100,20);
+                      jPanel2.setPreferredSize(labelDim);
+             }                           
+      }                                                    
+                    }
+                    
                     else if(currentCard == 4)
                     {
+     Vector<String> substitute= new Vector<>();
+     Vector<String> playing11= new Vector<>();
+     Vector<String> addsubstitute= new Vector<>();
+     
+                        int playerNo = 1;
+                        int CFID=0;
+                        int AMFID=0;
+                        int DMLID=0;
+                        int LMFID=0;
+                        int RMFID=0;
+                        int CBID=0;
+                        int GKID=0;
+                        int RBID = 0;
+                        int LBID = 0;
+                        int RWFID = 0;
+                        int LWFID = 0;
+                        int CMFID = 0;
+                        try {
+                            
+                            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                            String sql = "select * from player_details where clubName = ?";
+                            PreparedStatement plat = c.prepareStatement(sql);
+                            plat.setString(1, name_of_club.getText());
+                            ResultSet rs = plat.executeQuery();
+                            int check =0;
+                            while(rs.next())
+                            {   
+                                 if(rs.getString("market_status").equals("0"))
+                                 {
+                                if(rs.getString("player_status").equals("1"))
+                                {
+                                    int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                        if(pol == -1)
+                                        {
+                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4)+"⦻");
+                                        }
+                                        continue;
+                                }                                     
+                                     if( playerNo <= 11)
+                                     {
+                                         if(rs.getString(4).equals("CF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CFID == 0)
+                                                    {
+                                                        CF6.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CFID++;
+                                                }
+                                                else
+                                                {
+                                                    CFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CMFID == 0)
+                                                    {
+                                                        CMF.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CMFID++;
+                                                }
+                                                else
+                                                {
+                                                    CMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LWF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LWFID == 0)
+                                                    {
+                                                        LWF1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LWFID++;
+                                                }
+                                                else
+                                                {
+                                                    LWFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RWF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RWFID == 0)
+                                                    {
+                                                        RWF1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RWFID++;
+                                                }
+                                                else
+                                                {
+                                                    RWFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("DML"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(DMLID == 0)
+                                                    {
+                                                        DML6.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(DMLID == 1)
+                                                    {
+                                                        DML7.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     DMLID++;
+                                                }
+                                                else
+                                                {
+                                                    DMLID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CBID == 0)
+                                                    {
+                                                        CB7.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CBID == 1)
+                                                    {
+                                                        CB10.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CBID++;
+                                                }
+                                                else
+                                                {
+                                                    CBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("GK"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(GKID == 0)
+                                                    {
+                                                        GK3.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     GKID++;
+                                                }
+                                                else
+                                                {
+                                                    GKID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RBID == 0)
+                                                    {
+                                                        RB2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RBID++;
+                                                }
+                                                else
+                                                {
+                                                    RBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LBID == 0)
+                                                    {
+                                                        LB2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LBID++;
+                                                }
+                                                else
+                                                {
+                                                    LBID++;
+                                                }
+                                         }                                         
+                                         else
+                                         {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                             
+                                         }
+                                     }
+                                     else
+                                     {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                         
+                                     }
+                                 }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+     Iterator<String> playing11iterate = playing11.iterator();
+     Iterator<String> substituteiterate = substitute.iterator();
+     while(playing11iterate.hasNext()) {
+            System.out.print(playing11iterate.next());
+            System.out.print(", ");
+      }
+         System.out.println("\n");      
+         {
+                    JLabel j = new JLabel();
+                    j.setText("________________________________");
+                    j.setSize(160, 16);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }
+         {
+                    JLabel j = new JLabel();
+                    j.setText("Substitute Bench");
+                    j.setSize(161, 29);
+                    j.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC, 23));
+                    j.setBorder(blackline);
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }         
+      while(substituteiterate.hasNext()) {
+          String jst = substituteiterate.next();
+            int rol = addsubstitute.indexOf(""+jst);
+             if(rol == -1)
+             {
+                     addsubstitute.add(""+jst);
+                     JLabel j = new JLabel();
+                    j.setText(""+jst);
+                    j.setSize(140, 30);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+                    j.setIcon(userIcon);
+                    jPanel2.add(j);
+                    j.addMouseListener(new MouseAdapter()
+                    {
+                       public void  mouseClicked(MouseEvent e)
+                       {
+                        turnOff2();
+                        
+                        try {
+                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                             String sql = "select * from player_details where Name = ?";
+                             PreparedStatement plat = c.prepareStatement(sql);
+                             
+                             String p = separate(jst);
+                             System.out.println(""+p);
+                             
+                             plat.setString(1, separate(jst));
+                             ResultSet rs = plat.executeQuery();
+            
+                        while(rs.next()){
+                            NAME.setText(rs.getString("Name"));
+                            COUNTRY.setText(rs.getString("country"));
+                            POS.setText(rs.getString("position"));          
+                            CLUB.setText(rs.getString("clubName"));                    
+                            AGGE.setText(rs.getString("age")+" Years old");
+                            HEIGHT.setText(rs.getString("Height")+" cm");
+                            SALARY.setText(rs.getString("Salary")+"$");
+                            MKT_VALUE.setText(rs.getString("market_price")+"$");                   
+                            turnOn();                  
+                            break;
+                           } 
+                        } catch (SQLException ex) {
+                                        Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                            }         // TODO add your handling code here:                              
+                    }
+                    });                    
+                    Dimension labelDim = new Dimension(100,20);
+                      jPanel2.setPreferredSize(labelDim);
+             }                           
+      }                        
                         
                     }
                     else if(currentCard == 5)
                     {
+     Vector<String> substitute= new Vector<>();
+     Vector<String> playing11= new Vector<>();
+     Vector<String> addsubstitute= new Vector<>();
+     
+                        int playerNo = 1;
+                        int CFID=0;
+                        int AMFID=0;
+                        int DMLID=0;
+                        int LMFID=0;
+                        int RMFID=0;
+                        int CBID=0;
+                        int GKID=0;
+                        int RBID = 0;
+                        int LBID = 0;
+                        int RWFID = 0;
+                        int LWFID = 0;
+                        int CMFID = 0;
+                        try {
+                            
+                            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                            String sql = "select * from player_details where clubName = ?";
+                            PreparedStatement plat = c.prepareStatement(sql);
+                            plat.setString(1, name_of_club.getText());
+                            ResultSet rs = plat.executeQuery();
+                            int check =0;
+                            while(rs.next())
+                            {
+                                 if(rs.getString("market_status").equals("0"))
+                                 {
+                                if(rs.getString("player_status").equals("1"))
+                                {
+                                    int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                        if(pol == -1)
+                                        {
+                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4)+"⦻");
+                                        }
+                                        continue;
+                                }                                     
+                                     if( playerNo <= 11)
+                                     {
+                                         if(rs.getString(4).equals("CF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CFID == 0)
+                                                    {
+                                                        CF7.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CFID == 1)
+                                                    {
+                                                        CF9.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CFID++;
+                                                }
+                                                else
+                                                {
+                                                    CFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CMFID == 0)
+                                                    {
+                                                        CMF2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CMFID++;
+                                                }
+                                                else
+                                                {
+                                                    CMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LWF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LWFID == 0)
+                                                    {
+                                                        LWF2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LWFID++;
+                                                }
+                                                else
+                                                {
+                                                    LWFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RWF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RWFID == 0)
+                                                    {
+                                                        RWF2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RWFID++;
+                                                }
+                                                else
+                                                {
+                                                    RWFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("DML"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(DMLID == 0)
+                                                    {
+                                                        DML10.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     DMLID++;
+                                                }
+                                                else
+                                                {
+                                                    DMLID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CBID == 0)
+                                                    {
+                                                        CB13.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CBID == 1)
+                                                    {
+                                                        CB15.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CBID++;
+                                                }
+                                                else
+                                                {
+                                                    CBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("GK"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(GKID == 0)
+                                                    {
+                                                        GK5.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     GKID++;
+                                                }
+                                                else
+                                                {
+                                                    GKID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RBID == 0)
+                                                    {
+                                                        RB4.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RBID++;
+                                                }
+                                                else
+                                                {
+                                                    RBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LBID == 0)
+                                                    {
+                                                        LB4.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LBID++;
+                                                }
+                                                else
+                                                {
+                                                    LBID++;
+                                                }
+                                         }                                         
+                                         else
+                                         {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                             
+                                         }
+                                     }
+                                     else
+                                     {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                         
+                                     }
+                                 }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+     Iterator<String> playing11iterate = playing11.iterator();
+     Iterator<String> substituteiterate = substitute.iterator();
+     while(playing11iterate.hasNext()) {
+            System.out.print(playing11iterate.next());
+            System.out.print(", ");
+      }
+         System.out.println("\n");      
+         {
+                    JLabel j = new JLabel();
+                    j.setText("________________________________");
+                    j.setSize(160, 16);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }
+         {
+                    JLabel j = new JLabel();
+                    j.setText("Substitute Bench");
+                    j.setSize(161, 29);
+                    j.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC, 23));
+                    j.setBorder(blackline);
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }         
+      while(substituteiterate.hasNext()) {
+          String jst = substituteiterate.next();
+            int rol = addsubstitute.indexOf(""+jst);
+             if(rol == -1)
+             {
+                     addsubstitute.add(""+jst);
+                     JLabel j = new JLabel();
+                    j.setText(""+jst);
+                    j.setSize(140, 30);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+                    j.setIcon(userIcon);
+                    jPanel2.add(j);
+                    j.addMouseListener(new MouseAdapter()
+                    {
+                       public void  mouseClicked(MouseEvent e)
+                       {
+                        turnOff2();
                         
+                        try {
+                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                             String sql = "select * from player_details where Name = ?";
+                             PreparedStatement plat = c.prepareStatement(sql);
+                             
+                             String p = separate(jst);
+                             System.out.println(""+p);
+                             
+                             plat.setString(1, separate(jst));
+                             ResultSet rs = plat.executeQuery();
+            
+                        while(rs.next()){
+                            NAME.setText(rs.getString("Name"));
+                            COUNTRY.setText(rs.getString("country"));
+                            POS.setText(rs.getString("position"));          
+                            CLUB.setText(rs.getString("clubName"));                    
+                            AGGE.setText(rs.getString("age")+" Years old");
+                            HEIGHT.setText(rs.getString("Height")+" cm");
+                            SALARY.setText(rs.getString("Salary")+"$");
+                            MKT_VALUE.setText(rs.getString("market_price")+"$");                   
+                            turnOn();                  
+                            break;
+                           } 
+                        } catch (SQLException ex) {
+                                        Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                            }         // TODO add your handling code here:                              
+                    }
+                    });                    
+                    Dimension labelDim = new Dimension(100,20);
+                      jPanel2.setPreferredSize(labelDim);
+             }                           
+      }                                                
                     }
                     else
                     {
+     Vector<String> substitute= new Vector<>();
+     Vector<String> playing11= new Vector<>();
+     Vector<String> addsubstitute= new Vector<>();
+     
+                        int playerNo = 1;
+                        int CFID=0;
+                        int AMFID=0;
+                        int DMLID=0;
+                        int LMFID=0;
+                        int RMFID=0;
+                        int CBID=0;
+                        int GKID=0;
+                        int RBID = 0;
+                        int LBID = 0;
+                        int RWFID = 0;
+                        int LWFID = 0;
+                        int CMFID = 0;
+                        try {
+                            
+                            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                            String sql = "select * from player_details where clubName = ?";
+                            PreparedStatement plat = c.prepareStatement(sql);
+                            plat.setString(1, name_of_club.getText());
+                            ResultSet rs = plat.executeQuery();
+                            int check =0;
+                            while(rs.next())
+                            {
+                                 if(rs.getString("market_status").equals("0"))
+                                 {
+                                if(rs.getString("player_status").equals("1"))
+                                {
+                                    int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                        if(pol == -1)
+                                        {
+                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4)+"⦻");
+                                        }
+                                        continue;
+                                }                                     
+                                     if( playerNo <= 11)
+                                     {
+                                         if(rs.getString(4).equals("CF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CFID == 0)
+                                                    {
+                                                        CF8.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                 
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CFID++;
+                                                }
+                                                else
+                                                {
+                                                    CFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CMFID == 0)
+                                                    {
+                                                        CMF1.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CMFID++;
+                                                }
+                                                else
+                                                {
+                                                    CMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LMFID == 0)
+                                                    {
+                                                        LMF2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LMFID++;
+                                                }
+                                                else
+                                                {
+                                                    LMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RMF"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RMFID == 0)
+                                                    {
+                                                        RMF2.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RMFID++;
+                                                }
+                                                else
+                                                {
+                                                    RMFID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("DML"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(DMLID == 0)
+                                                    {
+                                                        DML9.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     DMLID++;
+                                                }
+                                                else
+                                                {
+                                                    DMLID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("CB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(CBID == 0)
+                                                    {
+                                                        CB9.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CBID == 1)
+                                                    {
+                                                        CB11.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else if(CBID == 2)
+                                                    {
+                                                        CB12.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }                                                     
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     CBID++;
+                                                }
+                                                else
+                                                {
+                                                    CBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("GK"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(GKID == 0)
+                                                    {
+                                                        GK4.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     GKID++;
+                                                }
+                                                else
+                                                {
+                                                    GKID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("RB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(RBID == 0)
+                                                    {
+                                                        RB3.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     RBID++;
+                                                }
+                                                else
+                                                {
+                                                    RBID++;
+                                                }
+                                         }
+                                         else if(rs.getString(4).equals("LB"))
+                                         {
+                                            int dol = playing11.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                if(dol == -1 )
+                                                {
+                                                    if(LBID == 0)
+                                                    {
+                                                        LB3.setText(rs.getString(1));
+                                                        playing11.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        playerNo++;
+                                                    }
+                                                    else
+                                                    {
+                                                        int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        if(pol == -1)
+                                                        {
+                                                            substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                                        }
+                                                    }
+                                                     LBID++;
+                                                }
+                                                else
+                                                {
+                                                    LBID++;
+                                                }
+                                         }                                         
+                                         else
+                                         {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                             
+                                         }
+                                     }
+                                     else
+                                     {
+                                              int pol = substitute.indexOf(""+rs.getString(1)+"-"+rs.getString(4));
+                                              if(pol == -1)
+                                              {
+                                                    substitute.add(""+rs.getString(1)+"-"+rs.getString(4));
+                                              }                                         
+                                     }
+                                 }
+                            }
+                        } catch (SQLException ex) {
+                            Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+     Iterator<String> playing11iterate = playing11.iterator();
+     Iterator<String> substituteiterate = substitute.iterator();
+     while(playing11iterate.hasNext()) {
+            System.out.print(playing11iterate.next());
+            System.out.print(", ");
+      }
+         System.out.println("\n");      
+         {
+                    JLabel j = new JLabel();
+                    j.setText("________________________________");
+                    j.setSize(160, 16);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }
+         {
+                    JLabel j = new JLabel();
+                    j.setText("Substitute Bench");
+                    j.setSize(161, 29);
+                    j.setFont(new Font("Times New Roman",Font.BOLD | Font.ITALIC, 23));
+                    j.setBorder(blackline);
+                    jPanel2.add(j);
+                    Dimension labelDim = new Dimension(100,20);
+                    jPanel2.setPreferredSize(labelDim); 
+         }         
+      while(substituteiterate.hasNext()) {
+          String jst = substituteiterate.next();
+            int rol = addsubstitute.indexOf(""+jst);
+             if(rol == -1)
+             {
+                     addsubstitute.add(""+jst);
+                     JLabel j = new JLabel();
+                    j.setText(""+jst);
+                    j.setSize(140, 30);
+                    j.setFont(new Font("Times New Roman", Font.PLAIN, 18));
+                    j.setIcon(userIcon);
+                    jPanel2.add(j);
+                    j.addMouseListener(new MouseAdapter()
+                    {
+                       public void  mouseClicked(MouseEvent e)
+                       {
+                        turnOff2();
                         
+                        try {
+                             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                             String sql = "select * from player_details where Name = ?";
+                             PreparedStatement plat = c.prepareStatement(sql);
+                             
+                             String p = separate(jst);
+                             System.out.println(""+p);
+                             
+                             plat.setString(1, separate(jst));
+                             ResultSet rs = plat.executeQuery();
+            
+                        while(rs.next()){
+                            NAME.setText(rs.getString("Name"));
+                            COUNTRY.setText(rs.getString("country"));
+                            POS.setText(rs.getString("position"));          
+                            CLUB.setText(rs.getString("clubName"));                    
+                            AGGE.setText(rs.getString("age")+" Years old");
+                            HEIGHT.setText(rs.getString("Height")+" cm");
+                            SALARY.setText(rs.getString("Salary")+"$");
+                            MKT_VALUE.setText(rs.getString("market_price")+"$");                   
+                            turnOn();                  
+                            break;
+                           } 
+                        } catch (SQLException ex) {
+                                        Logger.getLogger(squad_practice.class.getName()).log(Level.SEVERE, null, ex);
+                            }         // TODO add your handling code here:                              
+                    }
+                    });                    
+                    Dimension labelDim = new Dimension(100,20);
+                      jPanel2.setPreferredSize(labelDim);
+             }                           
+      }                                                                        
                     }
     }//GEN-LAST:event_formComponentShown
 
@@ -1713,6 +5399,27 @@ public class squad_practice extends javax.swing.JFrame {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_jp352ComponentShown
+
+    private void CB1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CB1MousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_CB1MousePressed
+
+    private void DML1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML1MousePressed
+        // TODO add your handling code here:
+//private void DML1MouseDragged(java.awt.event.MouseEvent e){
+//                    Point currentLocation = new Point(DML1.getLocation());
+//                    p = evt.getPoint();
+//                    currentLocation.x = (int) p.getX();
+//                    currentLocation.y = (int) p.getY() - 250; // Height/2
+//                    p = currentLocation;                                   
+//}              
+    }//GEN-LAST:event_DML1MousePressed
+
+    private void DML1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DML1MouseReleased
+        // TODO add your handling code here:
+//        DML1.setLocation(p);
+    }//GEN-LAST:event_DML1MouseReleased
 
     /**
      * @param args the command line arguments
@@ -1740,11 +5447,16 @@ public class squad_practice extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(squad_practice.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new squad_practice().setVisible(true);
+                //new squad_practice().setVisible(true);
+                squad_practice sqd = new squad_practice();
+                sqd.setVisible(true);
+                sqd.setLocationRelativeTo(null);
+                
+                
             }
         });
     }
@@ -1835,9 +5547,7 @@ public class squad_practice extends javax.swing.JFrame {
     private javax.swing.JLabel f4;
     private javax.swing.JLabel f5;
     private javax.swing.JLabel f6;
-    private javax.swing.JLabel j2;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jp352;
@@ -1867,5 +5577,52 @@ public class squad_practice extends javax.swing.JFrame {
             currentCard = 6;
         else
             System.out.println(""+Formation);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+       // throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        startPoint = SwingUtilities.convertPoint(CB1, e.getPoint(), CB1.getParent());
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+//        startPoint = null;
+//throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        Point location = SwingUtilities.convertPoint(CB1, e.getPoint(), CB1.getParent());
+//        if(CB1.getParent().getBounds().contains(location)){
+//            Point newLocation = CB1.getLocation();
+//            newLocation.x = Math.max(newLocation.x, 0);
+//            newLocation.y = Math.max(newLocation.y, 0);
+//            newLocation.x = Math.min(newLocation.x, CB1.getParent().getWidth() - CB1.getWidth());
+//            newLocation.y = Math.min(newLocation.y, CB1.getParent().getHeight()- CB1.getHeight());
+//            CB1.setLocation(newLocation);
+//            startPoint = location;
+//        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

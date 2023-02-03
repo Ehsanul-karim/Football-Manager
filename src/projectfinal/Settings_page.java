@@ -4,6 +4,16 @@
  */
 package projectfinal;
 
+import static java.lang.System.exit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ehsan
@@ -243,6 +253,71 @@ public class Settings_page extends javax.swing.JFrame {
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
         // TODO add your handling code here:
+        System.out.println("hello"+"\n"+"world");
+        int input = JOptionPane.showConfirmDialog(this, "Confirm Deleting The Club ?"+"\n"+"All Yours Player Will be in the Market Place"+"\n"+"And Coach Details will be deleted",  "Select an Option...",
+	JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        if(input == 0){
+         try {
+            Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+            String sql = "delete from clubdetails where Name = ?";
+            PreparedStatement plat = c.prepareStatement(sql);
+            plat.setString(1,jLabel4.getText());
+            plat.executeUpdate();
+            
+                                String selectsql2 = "select * from coach_details where clubName = ?";
+                                PreparedStatement plater2 = c.prepareStatement(selectsql2);
+                                plater2.setString(1, jLabel4.getText());
+                                ResultSet rs2 = plater2.executeQuery();                                
+                                while(rs2.next()){
+                                    String coach_name = rs2.getString("coach");
+                                    String query2 = "delete from coach_details where coach= ?";
+                                    PreparedStatement plater22 = c.prepareStatement(query2);
+                                    plater22.setString(1, coach_name);
+                                    plater22.executeUpdate() ;                                   
+                                }
+                                String selectsql3 = "select * from match_details where clubname = ?";
+                                PreparedStatement plater3 = c.prepareStatement(selectsql3);
+                                plater3.setString(1, jLabel4.getText());
+                                ResultSet rs3 = plater3.executeQuery();                                
+                                while(rs3.next()){
+                                    int imatchNumber = rs3.getInt("matchNumber");
+                                    String query3 = "delete from match_details where matchNumber= ?";
+                                    PreparedStatement plater32 = c.prepareStatement(query3);
+                                    plater32.setInt(1, imatchNumber);
+                                    plater32.executeUpdate() ;                                   
+                                }
+                                
+                                String selectsql4 = "select * from match_details where opponent = ?";
+                                PreparedStatement plater4 = c.prepareStatement(selectsql4);
+                                plater4.setString(1, jLabel4.getText());
+                                ResultSet rs4 = plater4.executeQuery();                                
+                                while(rs4.next()){
+                                    int imatchNumber = rs4.getInt("matchNumber");
+                                    String query4 = "delete from match_details where matchNumber= ?";
+                                    PreparedStatement plater34 = c.prepareStatement(query4);
+                                    plater34.setInt(1, imatchNumber);
+                                    plater34.executeUpdate() ;                                   
+                                }                                
+                                String selectsql5 = "select * from player_details where clubName = ?";
+                                PreparedStatement plater5 = c.prepareStatement(selectsql5);
+                                plater5.setString(1, jLabel4.getText());
+                                ResultSet rs5 = plater5.executeQuery();                                
+                                while(rs5.next()){
+                                    String name = rs5.getString("Name");
+                                    String query5 = "update player_details set market_status = ? where Name= ?";
+                                    PreparedStatement plater35 = c.prepareStatement(query5);
+                                    plater35.setBoolean(1, true);
+                                    plater35.setString(2, name);
+                                    plater35.executeUpdate() ;                                   
+                                }                                
+            JOptionPane.showMessageDialog(this,"Team Deleted");
+            c.close();
+            exit(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(Settings_page.class.getName()).log(Level.SEVERE, null, ex);
+        }             
+        }
+        
     }//GEN-LAST:event_jButton24ActionPerformed
 
     /**

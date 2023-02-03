@@ -25,7 +25,7 @@ public class Player_Record extends javax.swing.JFrame {
      */
     private static int i = 0;
     private String positiondata;
-    private boolean renewCheck;
+    private boolean renewCheck=false;
     public Player_Record() {
         initComponents();
         jLabel10.setText(""+(i+1));
@@ -118,11 +118,10 @@ public class Player_Record extends javax.swing.JFrame {
         jDesktopPane1.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 163, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel5.setText("Renewable:");
+        jLabel5.setText("Not Injured");
         jDesktopPane1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 148, -1));
 
         buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setSelected(true);
         jRadioButton2.setText("Yes");
         jRadioButton2.setAutoscrolls(true);
         jRadioButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -134,6 +133,7 @@ public class Player_Record extends javax.swing.JFrame {
         jDesktopPane1.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 191, -1, -1));
 
         buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setSelected(true);
         jRadioButton1.setText("No");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -226,7 +226,7 @@ public class Player_Record extends javax.swing.JFrame {
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
         renewCheck = false;
-        jLabel5.setText("NonRenewable:");
+        jLabel5.setText("Not Injured:");
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -269,7 +269,7 @@ public class Player_Record extends javax.swing.JFrame {
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         // TODO add your handling code here:
         renewCheck = true;
-        jLabel5.setText("Renewable:");
+        jLabel5.setText("Injured:");
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

@@ -437,6 +437,8 @@ public class Homepage extends javax.swing.JFrame {
         });
         jPanel3.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 200, 40));
 
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/ManULogo2.png"))); // NOI18N
+
         jDesktopPane1.setLayer(jLabel10, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
@@ -686,9 +688,9 @@ public class Homepage extends javax.swing.JFrame {
         });
         jPanel1.add(jButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 560, 100, 30));
 
-        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel17.setText("Renewable :");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 90, 40));
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel17.setText("Injury ? :");
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 360, 80, 40));
 
         jTextField11.setEditable(false);
         jTextField11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -718,7 +720,7 @@ public class Homepage extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Name", "Country", "Position", "Renewable", "Age", "Height", "Salary"
+                "Name", "Country", "Position", "Injury Status", "Age", "Height", "Salary"
             }
         ));
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -826,6 +828,7 @@ public class Homepage extends javax.swing.JFrame {
 				JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
         if(input == 0){
         setVisible(false);
+            exit(0);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 

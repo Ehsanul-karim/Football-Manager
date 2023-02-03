@@ -4,6 +4,16 @@
  */
 package projectfinal;
 
+import static java.lang.System.exit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ehsan
@@ -13,8 +23,10 @@ public class Change_clubName extends javax.swing.JFrame {
     /**
      * Creates new form Change_clubName
      */
+    String Answer="";
     public Change_clubName() {
         initComponents();
+        jLabel8.setVisible(false);
     }
 
     /**
@@ -37,11 +49,15 @@ public class Change_clubName extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(48, 48, 48));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -62,7 +78,6 @@ public class Change_clubName extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("question");
 
         jButton1.setBackground(new java.awt.Color(80, 80, 80));
         jButton1.setFont(new java.awt.Font("Source Sans Pro Semibold", 0, 18)); // NOI18N
@@ -92,6 +107,11 @@ public class Change_clubName extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
 
         jTextField2.setBackground(new java.awt.Color(66, 66, 66));
         jTextField2.setFont(new java.awt.Font("Times New Roman", 0, 22)); // NOI18N
@@ -106,10 +126,6 @@ public class Change_clubName extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Answer");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("question");
-
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 0, 0));
         jLabel8.setText("Notification");
@@ -122,21 +138,20 @@ public class Change_clubName extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(71, 71, 71)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(407, 407, 407)
                         .addComponent(jButton2)
@@ -147,7 +162,7 @@ public class Change_clubName extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 462, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(3, 3, 3))
+                .addGap(3, 383, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,11 +176,10 @@ public class Change_clubName extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -197,8 +211,95 @@ public class Change_clubName extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
-            // TODO add your handling code here:
+        jLabel8.setVisible(false);
+            String Answer2 = jTextField2.getText();
+            if(Answer2.equals(Answer))
+            {
+                            try {          
+                                Connection cd = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                                String query = "update clubdetails set Name = ? where Name= ?";
+                                PreparedStatement plater = cd.prepareStatement(query);
+                                plater.setString(1, jTextField1.getText());
+                                plater.setString(2, jLabel1.getText());
+                                plater.executeUpdate();
+                                
+                                String selectsql2 = "select * from coach_details where clubName = ?";
+                                PreparedStatement plater2 = cd.prepareStatement(selectsql2);
+                                plater2.setString(1, jLabel1.getText());
+                                ResultSet rs2 = plater2.executeQuery();                                
+                                while(rs2.next()){
+                                    String coach_name = rs2.getString("coach");
+                                    String query2 = "update coach_details set clubName = ? where coach= ?";
+                                    PreparedStatement plater22 = cd.prepareStatement(query2);
+                                    plater22.setString(1, jTextField1.getText());
+                                    plater22.setString(2, coach_name);
+                                    plater22.executeUpdate() ;                                   
+                                } 
+                                
+                                String selectsql3 = "select * from match_details where clubname = ?";
+                                PreparedStatement plater3 = cd.prepareStatement(selectsql3);
+                                plater3.setString(1, jLabel1.getText());
+                                ResultSet rs3 = plater3.executeQuery();                                
+                                while(rs3.next()){
+                                    int imatchNumber = rs3.getInt("matchNumber");
+                                    String query3 = "update match_details set clubname = ? where matchNumber= ?";
+                                    PreparedStatement plater32 = cd.prepareStatement(query3);
+                                    plater32.setString(1, jTextField1.getText());
+                                    plater32.setInt(2, imatchNumber);
+                                    plater32.executeUpdate() ;                                   
+                                }
+                                
+                                String selectsql4 = "select * from match_details where opponent = ?";
+                                PreparedStatement plater4 = cd.prepareStatement(selectsql4);
+                                plater4.setString(1, jLabel1.getText());
+                                ResultSet rs4 = plater4.executeQuery();                                
+                                while(rs4.next()){
+                                    int imatchNumber = rs4.getInt("matchNumber");
+                                    String query4 = "update match_details set opponent = ? where matchNumber= ?";
+                                    PreparedStatement plater34 = cd.prepareStatement(query4);
+                                    plater34.setString(1, jTextField1.getText());
+                                    plater34.setInt(2, imatchNumber);
+                                    plater34.executeUpdate() ;                                   
+                                }                                
+                                String selectsql5 = "select * from player_details where clubName = ?";
+                                PreparedStatement plater5 = cd.prepareStatement(selectsql5);
+                                plater5.setString(1, jLabel1.getText());
+                                ResultSet rs5 = plater5.executeQuery();                                
+                                while(rs5.next()){
+                                    String name = rs5.getString("Name");
+                                    String query5 = "update player_details set clubName = ? where Name= ?";
+                                    PreparedStatement plater35 = cd.prepareStatement(query5);
+                                    plater35.setString(1, jTextField1.getText());
+                                    plater35.setString(2, name);
+                                    plater35.executeUpdate() ;                                   
+                                } 
+                                cd.close();
+                                plater.close();
+                                plater2.close();
+                                plater3.close();
+                                plater4.close();
+                                plater5.close();
+                            }
+                            catch(Exception e)
+                            {
+                                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+                            } 
+                            
+                            JOptionPane.showMessageDialog(this, "Name Updated. Please Log in Again");
+                            exit(0);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Change_clubName.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                            Loading_page obj = new Loading_page();
+                            obj.setVisible(true);
+            }
+            else
+            {
+                jLabel8.setText("Answer Don't Match");
+                jLabel8.setVisible(true);
+            }
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -209,6 +310,55 @@ public class Change_clubName extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        // TODO add your handling code here:
+                            try {          
+                                Connection cd = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                                String selectSQL = "SELECT * FROM clubdetails WHERE Name = ?";
+                                PreparedStatement plater = cd.prepareStatement(selectSQL);
+                                plater.setString(1, jLabel1.getText());
+                                // execute select SQL stetement
+                                    ResultSet rs = plater.executeQuery();
+                                           while (rs.next()) {
+                                           String Question = rs.getString("securityQuestion");
+                                           Answer = rs.getString("answer");
+                                           jLabel5.setText(Question);
+                                           cd.close();
+                                           plater.close();
+                                           break;
+                                    }
+                                           cd.close();
+                                           plater.close();
+                            }
+                            catch(Exception e)
+                            {
+                                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+                            }
+    }//GEN-LAST:event_formComponentShown
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+        jLabel8.setVisible(false);
+                            try {          
+                                Connection cd = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                                String selectSQL = "SELECT * FROM clubdetails WHERE Name = ?";
+                                PreparedStatement plater = cd.prepareStatement(selectSQL);
+                                plater.setString(1, jTextField1.getText());
+                                // execute select SQL stetement
+                                    ResultSet rs = plater.executeQuery();
+                                           while (rs.next()) {
+                                               jLabel8.setText("Name Already Taken");
+                                               jLabel8.setVisible(true);
+                                            }
+                                           cd.close();
+                                           plater.close();
+                            }
+                            catch(Exception e)
+                            {
+                                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+                            }        
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -253,7 +403,6 @@ public class Change_clubName extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

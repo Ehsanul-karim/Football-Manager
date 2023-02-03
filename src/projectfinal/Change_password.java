@@ -4,6 +4,16 @@
  */
 package projectfinal;
 
+import static java.lang.System.exit;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Ehsan
@@ -13,8 +23,11 @@ public class Change_password extends javax.swing.JFrame {
     /**
      * Creates new form Change_password
      */
+    String newPassword="";
+    String Password="";
     public Change_password() {
         initComponents();
+        jLabel8.setVisible(false);
     }
 
     /**
@@ -39,6 +52,11 @@ public class Change_password extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(48, 48, 48));
@@ -90,6 +108,11 @@ public class Change_password extends javax.swing.JFrame {
 
         jPasswordField1.setBackground(new java.awt.Color(66, 66, 66));
         jPasswordField1.setFont(new java.awt.Font("Times New Roman", 0, 22)); // NOI18N
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyReleased(evt);
+            }
+        });
         jPanel2.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 180, 30));
 
         jPasswordField2.setBackground(new java.awt.Color(66, 66, 66));
@@ -124,9 +147,100 @@ public class Change_password extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-
+        jLabel8.setVisible(false);
         // TODO add your handling code here:
+        String oldPassword  = ""+ new String(jPasswordField2.getPassword());
+        if(Password.equals(oldPassword))
+        {
+            try {
+                Connection cd = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                String query = "update clubdetails set password = ? where Name= ?";
+                PreparedStatement plater = cd.prepareStatement(query);
+                plater.setString(1, newPassword);
+                plater.setString(2, jLabel1.getText());
+                plater.executeUpdate();
+                cd.close();
+                plater.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Change_password.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(this, "Password Updated. Please Log in Again");
+             exit(0);
+        }
+        else{
+            jLabel8.setText("Password Don't Match");
+            jLabel8.setVisible(true);
+        } 
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jPasswordField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyReleased
+        // TODO add your handling code here:
+        jLabel8.setVisible(false);
+        newPassword  = ""+ new String(jPasswordField1.getPassword());
+        int symbol = 0;
+        int UpperCase = 0;
+        int LowerCase = 0;
+        int number = 0;
+        for (int i = 0; i < newPassword.length(); i++) {
+            char c = newPassword.charAt(i);
+            
+            if(c >= 65 &&c <=90)
+            {
+                UpperCase++;
+            }
+            else if(c >= 97 &&c <=122)
+            {
+                LowerCase++;
+            }            
+            else if(c >= 48 &&c <=57)
+            {
+                number++;
+            }
+            else
+            {
+               symbol++; 
+            }    
+        }
+        if( (UpperCase>0) && (LowerCase>0) && (number>0) && (symbol>0))
+        {
+            jLabel8.setText("Perfect Password");
+        }
+        else if( (UpperCase>0) && (LowerCase>0) && (number>0))
+        {
+            jLabel8.setText("Strong Password");
+        }
+        else if( (UpperCase>0) && (LowerCase>0))
+        {
+            jLabel8.setText("Good Password");
+        }
+        else
+        {
+            jLabel8.setText("Poor Password");
+        }
+        jLabel8.setVisible(true);
+    }//GEN-LAST:event_jPasswordField1KeyReleased
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+                            try {          
+                                Connection cd = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                                String selectSQL = "SELECT * FROM clubdetails WHERE Name = ?";
+                                PreparedStatement plater = cd.prepareStatement(selectSQL);
+                                plater.setString(1, jLabel1.getText());
+                                ResultSet rs = plater.executeQuery();
+                                           while (rs.next()) {
+                                           Password = rs.getString("password");
+                                           cd.close();
+                                           plater.close();
+                                           break;
+                                        }
+                                cd.close();
+                                plater.close();
+                            }
+                            catch(Exception e)
+                            {
+                                Logger.getLogger(Homepage.class.getName()).log(Level.SEVERE, null, e);
+                            }
+    }//GEN-LAST:event_formComponentShown
 
     /**
      * @param args the command line arguments

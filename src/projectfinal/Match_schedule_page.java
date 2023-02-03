@@ -39,6 +39,7 @@ public class Match_schedule_page extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -58,10 +59,15 @@ public class Match_schedule_page extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(243, 243, 243));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel3.setFont(new java.awt.Font("Noto Serif", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(102, 255, 204));
+        jLabel3.setText("Stadium");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 620, 50));
+
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 51));
         jLabel1.setText("Club_name");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 260, 50));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 620, 50));
 
         jTable1.setBackground(new java.awt.Color(23, 40, 60));
         jTable1.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
@@ -164,7 +170,7 @@ public class Match_schedule_page extends javax.swing.JFrame {
                    System.out.println(""+HomeVENUE);            
             c2.close();
             plat2.close();
-            
+            jLabel3.setText(""+HomeVENUE);
             Connection c = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
             String sql = "select * from match_details where clubname = ?";
             PreparedStatement plat = c.prepareStatement(sql);
@@ -207,6 +213,42 @@ public class Match_schedule_page extends javax.swing.JFrame {
                     v.add(rs.getString("datetime"));
                    dtm.addRow(v);
                 }
+                    
+            String dql2 = "select * from match_details where opponent = ?";
+            PreparedStatement dlat2 = c.prepareStatement(dql2);
+            dlat2.setString(1,jLabel1.getText());
+            ResultSet pps2 = dlat2.executeQuery();        
+                    while(pps2.next()){
+                    check = 1;
+                    java.util.Vector v = new java.util.Vector();
+                    v.add(pps2.getString("clubname"));
+                    
+                    String OPPONENT = pps2.getString("clubname");
+                    Connection dd2 = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/clubname","root","1960");
+                    String dqld2="";
+                    PreparedStatement platdd2;
+                    dqld2 = "select * from clubdetails where Name = ?";     
+                    platdd2 = dd2.prepareStatement(dqld2);
+                    platdd2.setString(1,OPPONENT);
+                    ResultSet rsdd2 = platdd2.executeQuery();
+                         while(rsdd2.next()){
+                                AwayVENUE = rsdd2.getString("stadium");
+                                 break;
+                         }
+                    dd2.close();
+                    platdd2.close();
+                    
+                    if(pps2.getString("matchType").equals("0")){     
+                    v.add(""+HomeVENUE);
+                    }
+                    if(pps2.getString("matchType").equals("1")){     
+                    v.add(""+AwayVENUE);
+                    }
+                    
+                    v.add(pps2.getString("datetime"));
+                   dtm.addRow(v);
+                }            
+            dlat2.close();    
             if(check ==0)
             {
                 jLabel2.setVisible(true);
@@ -330,6 +372,7 @@ public void yelool()
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
